@@ -9,16 +9,15 @@ $tagList = $tags->all();
 if (isset($_POST['edit']) && $_POST['edit'] && $data['isTagEditable']) {
     $tags = $_POST['tags'];
     $values = $_POST['value'];
-    foreach($values as $key => $value){
-        foreach($tags as $k => $v){
+    foreach ($values as $key => $value) {
+        foreach ($tags as $k => $v) {
             $tag = $tagValue->find(['tag_id' => $k, 'key_val_id' => $value]);
-            if(isset($tag[0]) && $tag[0])
-                $tagValue->update($tag[0]->id,['value'=>$v]);
+            if (isset($tag[0]) && $tag[0])
+                $tagValue->update($tag[0]->id, ['value' => $v]);
         }
     }
     echo "<div class='notice'>Tags is updated</div>";
-}
-elseif(isset($_POST['delete']) && $_POST['delete'] > 0) {
+} elseif (isset($_POST['delete']) && $_POST['delete'] > 0) {
 
     $keyVal->delete($_POST['delete']);
     echo "<div class='notice'>Value is deleted</div>";
@@ -37,8 +36,11 @@ $list = $keyVal->getListByKeys($data['name']);
             <?php if ($tagList && $data['isTagEditable']) : ?>
                 <br />
                 <?php foreach ($tagList as $key => $value) : $value->name = "tags[{$value->id}]" ?>
-                    <label><b> <?= $value->title ?> </b>:</label>
-                    <?= renderTagInput($value) ?>
+                    <div>
+                        <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
+                            <?= renderTagInput($value) ?>
+                        </label>
+                    </div>
                 <?php endforeach ?>
 
                 <button type="submit" name="edit" value="submit" class="button"> Edit </button>

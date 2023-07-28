@@ -48,8 +48,11 @@ if ($keyList) {
             <?php if ($tagList) : ?>
                 <hr />
                 <?php foreach ($tagList as $key => $value) : $value->name = "tags[{$value->id}]" ?>
-                    <label><b> <?= $value->title ?> </b>:</label>
-                    <?= renderTagInput($value) ?>
+                    <div>
+                        <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
+                            <?= renderTagInput($value) ?>
+                        </label>
+                    </div>
                 <?php endforeach ?>
 
             <?php endif; ?>
