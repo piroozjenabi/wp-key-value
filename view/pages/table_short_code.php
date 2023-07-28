@@ -36,7 +36,7 @@ $list = $keyVal->getListByKeys($data['name']);
             <?php if ($tagList && $data['isTagEditable']) : ?>
                 <br />
                 <?php foreach ($tagList as $key => $value) : $value->name = "tags[{$value->id}]" ?>
-                    <div>
+                    <div class="tags">
                         <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
                             <?= renderTagInput($value) ?>
                         </label>
