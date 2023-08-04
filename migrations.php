@@ -8,6 +8,8 @@ defined('ABSPATH') || exit;
   `id` INT NOT NULL AUTO_INCREMENT ,
   `val` VARCHAR(250) NOT NULL ,
   `key_id` INT NOT NULL ,
+  `created_by` INT NULL ,
+  `created_type` VARCHAR(10) NULL ,
   `created_at` DATETIME NOT NULL DEFAULT NOW() ,
   PRIMARY KEY (id)
   ) $charset_collate;";

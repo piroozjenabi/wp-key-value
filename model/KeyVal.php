@@ -30,7 +30,8 @@ class KeyVal extends Model
         $list = $this->query(
             "SELECT  t1.*, t2.*,
                 t4.id AS tag_id,t4.name AS tag_name,t4.title AS tag_title,
-                t3.value AS tag_value ,t1.id AS vid , t1.created_at AS created_at
+                t3.value AS tag_value ,t1.id AS vid , t1.created_at AS created_at,
+                t1.created_by AS created_by,t1.created_type AS created_type
                 FROM 
                 {$this->table} t1 
                 JOIN $table_key t2 on t1.key_id=t2.id 
@@ -49,6 +50,8 @@ class KeyVal extends Model
                     'vid' => $val->vid,
                     'val' => $val->val,
                     'created_at' => $val->created_at,
+                    'created_by' => $val->created_by,
+                    'created_type' => $val->created_type,
                     'name' => $val->name,
                     'title' => $val->title
                 ];
@@ -82,5 +85,18 @@ class KeyVal extends Model
         }
         $idsConditions = '"' . implode('","', $ids) . '"';
         return $this->list(100, '', $idsConditions);
+    }
+
+    /**
+     * insert into key val table
+     */
+    function insert($data,$type='SITE'){
+        $current_user = wp_get_current_user();
+        $data['created_type'] = 'API';
+        if ($current_user->ID && $current_user->ID != 0) {
+            $data['created_by'] = $current_user->ID;
+            $data['created_type'] = 'SITE';
+        }
+        parent::insert($data);
     }
 }

@@ -79,12 +79,15 @@ $tagList = $tags->all();
           <th style="border: 1px solid #dddddd;padding: 8px;">value</th>
           <th style="border: 1px solid #dddddd;padding: 8px;">key</th>
           <th style="border: 1px solid #dddddd;padding: 8px;">tags</th>
+          <th style="border: 1px solid #dddddd;padding: 8px;">creator</th>
           <th style="border: 1px solid #dddddd;padding: 8px;">date</th>
           <th style="border: 1px solid #dddddd;padding: 8px;">actions</th>
         </tr>';
         $data = [];
         $labels = [];
         foreach ($results as $result) {
+            $creator = $result['created_by'] ? get_user_by('ID', $result['created_by']):'';
+            
             $data[$result['title']][] = $result['val'];
             $labels[] = date("Y-m-d", strtotime($result->created_at));
             echo '<tr style="background:' . ($flg ? '#faf4ff' : '#f9f9f9') . '">
@@ -97,6 +100,7 @@ $tagList = $tags->all();
                     : ''
                 )
                 . '</td>
+                <td style="border: 1px solid #dddddd;padding: 8px;">' . ($creator->user_nicename ?? $result['created_type']??'') . '</td>
                 <td style="border: 1px solid #dddddd;padding: 8px;">' . $result['created_at']  . '</td>
                 
                 <td>
