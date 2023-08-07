@@ -49,6 +49,16 @@ function init_menu()
   );
   add_submenu_page(
     "manage_key_val",
+    "Settings",
+    "Settings",
+    "manage_options",
+    "manage_key_val_settings",
+    function () {
+      view('setting');
+    }
+  );
+  add_submenu_page(
+    "manage_key_val",
     "Help",
     "Help",
     "manage_options",

@@ -47,16 +47,34 @@ switch ($command) {
 
         consoleMaker(
             __DIR__ . '/model/.sample.php', 
-            __DIR__ . "/model/{$nameObj['class']}.php",
+            __DIR__ . "/model/{$nameObj['camel']}.php",
             [
-                '__NAME_DB__' => $nameObj['db'],
-                '__NAME__' => $nameObj['class']
+                '__NAME_DB__' => $nameObj['snake'],
+                '__NAME__' => $nameObj['camel']
             ]
         );
 
-        echo "model = {$nameObj['class']},data base = {$nameObj['class']} , please complete migration";
+        echo "model = {$nameObj['camel']},data base = {$nameObj['camel']} , please complete migration";
 
-    break;    
+    break;
+
+    case "make:page":
+        echo "enter name of page:";
+        $page = fgets(STDIN);
+        $pageObj = namer($page);
+
+        consoleMaker(
+            __DIR__ . '/pages/.sample.php',
+            __DIR__ . "/pages/{$pageObj['camel']}.php",
+            [
+                '__NAME_DB__' => $pageObj['snake'],
+                '__NAME__' => $pageObj['camel']
+            ]
+        );
+
+        echo "page = {$pageObj['camel']},please complete form";
+
+        break;    
     default:
         echo "command not found for more info type help\r\n";
         break;    

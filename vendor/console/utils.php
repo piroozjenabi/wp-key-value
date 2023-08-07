@@ -7,9 +7,9 @@ defined('ABSPATH') || exit;
  * @param string $in
  * @return Array
  */
-function namer(String $in): Array
+function namer(String $in): array
 {
-    
+
     $word = preg_split('/[\s_]+/', $in);
 
     $lowercaseWords = array_map('strtolower', $word);
@@ -23,13 +23,13 @@ function namer(String $in): Array
 
     $camelCaseString = implode('', $camelCaseWords);
     $dbCaseString = implode('_', $db);
-     
+
     return
-    [
-        'class' => $camelCaseString,
-        'db' => substr($dbCaseString, 0, -1),
-        // 'camelCase' => $camelCaseString //TODO add camel case 
-    ];
+        [
+            'camel' => $camelCaseString,
+            'snake' => substr($dbCaseString, 0, -1),
+            // 'camelCase' => $camelCaseString //TODO add camel case 
+        ];
 }
 
 /**
