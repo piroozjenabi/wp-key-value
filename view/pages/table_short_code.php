@@ -29,13 +29,13 @@ $list = $keyVal->getListByKeys($data['name']);
 ?>
 
 <div class="wrap">
-    <form method="post" action="">
+    <form method="post" action="" enctype="multipart/form-data">
 
         <h4><?= $key->title ?></h4>
         <div>
             <?php if ($tagList && $data['isTagEditable']) : ?>
                 <br />
-                <?php foreach ($tagList as $key => $value) : $value->name = "tags[{$value->id}]" ?>
+                <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
                     <div class="tags">
                         <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
                             <?= renderTagInput($value) ?>

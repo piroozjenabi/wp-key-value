@@ -95,6 +95,7 @@ class Model
         VALUES ('" . implode("','", $data) . "')
         ";
         $this->query($insertQuery);
+        
         return $this->findById($this->db->insert_id)[0];
     }
 

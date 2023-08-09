@@ -5,13 +5,14 @@ $keyVal = loadModel('KeyVal');
 $tags = loadModel('Tags');
 $tagValue = loadModel('TagValue');
 $tagList = $tags->all();
+$tagListFile = $tags->find(['type' => 'file']);
 ?>
 <div class="wrap">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <h1 class="wp-heading-inline">Key Val Manager </h1>
     <div>
-        <form action="" method="post">
-            <input type="number" placeholder="value" name="value" />
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="text" placeholder="<?= get_option('valueLabel') ?>" name="value" />
             <select name="key_id">
                 <option value="">select key</option>
 
@@ -23,7 +24,7 @@ $tagList = $tags->all();
             <button type="submit" name="submit" value="submit" class="button"> Add new Val + </button>
             <?php if ($tagList) : ?>
                 <br />
-                <?php foreach ($tagList as $key => $value) : $value->name = "tags[{$value->id}]" ?>
+                <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
                     <label><b> <?= $value->title ?> </b>:</label>
                     <?= renderTagInput($value) ?>
                 <?php endforeach ?>
@@ -46,14 +47,22 @@ $tagList = $tags->all();
         $value = $_POST['value'];
         $key = $_POST['key_id'];
         $tags = $_POST['tags'];
+
+        
         if (!$key) {
             echo "<div class='notice notice-error'>key is required</div>";
         } else {
             $res = $keyVal->insert(['val' => $value, 'key_id' => $key]);
             if (isset($res)) {
 
-                if ($tags)
+                if ($tags){
+                    foreach($tagListFile as $key => $val){
+                        $uploadRes = upload($val->name);
+                        
+                        $tags[$val->id] = $uploadRes[0]? $uploadRes[1] : $tags[$val->id];
+                    }
                     $tagValue->insertBulk($res->id, $tags);
+                }
                 echo "<div class='notice notice-success'> value submitted successfully</div>";
             } else {
 
@@ -76,7 +85,7 @@ $tagList = $tags->all();
         echo '<table style="  border-collapse: collapse;width: 100%;" >
         <tr style="border: 1px solid #dddddd;padding: 8px;background:#fff">
           <th style="border: 1px solid #dddddd;padding: 8px;">id</th>
-          <th style="border: 1px solid #dddddd;padding: 8px;">'.get_option('valueLabel').'</th>
+          <th style="border: 1px solid #dddddd;padding: 8px;">' . get_option('valueLabel') . '</th>
           <th style="border: 1px solid #dddddd;padding: 8px;">key</th>
           <th style="border: 1px solid #dddddd;padding: 8px;">tags</th>
           <th style="border: 1px solid #dddddd;padding: 8px;">creator</th>
@@ -86,21 +95,21 @@ $tagList = $tags->all();
         $data = [];
         $labels = [];
         foreach ($results as $result) {
-            $creator = $result['created_by'] ? get_user_by('ID', $result['created_by']):'';
-            
+            $creator = $result['created_by'] ? get_user_by('ID', $result['created_by']) : '';
+
             $data[$result['title']][] = $result['val'];
-            $labels[] = date("Y-m-d", strtotime($result->created_at));
+            $labels[] = date("Y-m-d", strtotime($result['created_at']));
             echo '<tr style="background:' . ($flg ? '#faf4ff' : '#f9f9f9') . '">
                 <td style="border: 1px solid #dddddd;padding: 8px;">' . $result['vid']  . '</td>
                 <td style="border: 1px solid #dddddd;padding: 8px;">' . $result['val']  . ($flg ? ' (فعال)' : '') . ' </td>
                 <td style="border: 1px solid #dddddd;padding: 8px;">' . $result['title']  . '</td>
                 <td style="border: 1px solid #dddd99;padding: 8px;">' .
-                (is_array($result['tags_print'])
+                (isset($result['tags_print']) && is_array($result['tags_print'])
                     ? implode(',', $result['tags_print'])
                     : ''
                 )
                 . '</td>
-                <td style="border: 1px solid #dddddd;padding: 8px;">' . ($creator->user_nicename ?? $result['created_type']??'') . '</td>
+                <td style="border: 1px solid #dddddd;padding: 8px;">' . ($creator->user_nicename ?? $result['created_type'] ?? '') . '</td>
                 <td style="border: 1px solid #dddddd;padding: 8px;">' . $result['created_at']  . '</td>
                 
                 <td>

@@ -1,6 +1,7 @@
 <?php
 defined('ABSPATH') || exit;
 $tags = loadModel('Tags');
+$type = $tags->type;
 
 ?>
 <div class="wrap">
@@ -24,10 +25,9 @@ $tags = loadModel('Tags');
                     <div class="form-field form-required term-name-wrap">
                         <label for="tag-name">Type</label>
                         <select name="type" class="postform">
-                            <option value="text">Text Box</option>
-                            <option value="number">Number Box</option>
-                            <option value="wooid">Woocomerce Order id</option>
-                            <option value="select">Select Box</option>
+                           <?php foreach($type as $key => $val): ?>
+                                <option value="<?= $val['key'] ?>"> <?= $val['value'] ?> </option>
+                            <?php endforeach ?>
                         </select>
                         <p>
                             Select Type of tag

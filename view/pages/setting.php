@@ -16,7 +16,6 @@ if (isset($_POST['submit'])) {
 
 <div class="wrap">
     <h1>Key-val Setting</h1>
-    <form method="post" action="">
         <div class="col-wrap">
             <form action="" method="post">
                 <table class="form-table" role="presentation">

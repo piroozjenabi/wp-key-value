@@ -29,8 +29,8 @@ if ($keyList) {
 ?>
 
     <div class="wrap">
-        <form action="" method="post">
-            <input type="number" placeholder="value" name="value" />
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="text" placeholder="<?= get_option('valueLabel') ?>" name="value" />
             <?php if (count($keyList) > 1) : ?>
                 <select name="key_id">
 
@@ -47,7 +47,7 @@ if ($keyList) {
             <button type="submit" name="submit" value="submit" class="button"> Add new Val + </button>
             <?php if ($tagList) : ?>
                 <hr />
-                <?php foreach ($tagList as $key => $value) : $value->name = "tags[{$value->id}]" ?>
+                <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
                     <div class="tags">
                         <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
                             <?= renderTagInput($value) ?>

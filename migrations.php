@@ -54,7 +54,7 @@ defined('ABSPATH') || exit;
   `id` INT NOT NULL AUTO_INCREMENT ,
   `tag_id` INT NOT NULL ,
   `key_val_id` INT NOT NULL ,
-  `value` VARCHAR(50) NOT NULL ,
+  `value` VARCHAR(255) NOT NULL ,
   `created_at` DATETIME NOT NULL DEFAULT NOW() ,
   PRIMARY KEY (id)
   ) $charset_collate;";

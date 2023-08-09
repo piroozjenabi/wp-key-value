@@ -29,7 +29,7 @@ class KeyVal extends Model
         $con .= $keyIds ? " AND t1.key_id in ({$keyIds}) " : '';
         $list = $this->query(
             "SELECT  t1.*, t2.*,
-                t4.id AS tag_id,t4.name AS tag_name,t4.title AS tag_title,
+                t4.id AS tag_id,t4.name AS tag_name,t4.title AS tag_title, t4.type AS tag_type, 
                 t3.value AS tag_value ,t1.id AS vid , t1.created_at AS created_at,
                 t1.created_by AS created_by,t1.created_type AS created_type
                 FROM 
@@ -53,7 +53,8 @@ class KeyVal extends Model
                     'created_by' => $val->created_by,
                     'created_type' => $val->created_type,
                     'name' => $val->name,
-                    'title' => $val->title
+                    'title' => $val->title,
+                    'tag_type' => $val->type,
                 ];
 
             @$out[$val->vid]['tags'][$val->tag_id] = [
@@ -62,7 +63,7 @@ class KeyVal extends Model
                 'value' => $val->tag_value
             ];
             if (@$val->tag_title)
-                $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}={$val->tag_value}";
+                $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=".renderTagShow($val->tag_value,$val->tag_type);
             $i++;
         }
 
@@ -97,6 +98,6 @@ class KeyVal extends Model
             $data['created_by'] = $current_user->ID;
             $data['created_type'] = 'SITE';
         }
-        parent::insert($data);
+        return parent::insert($data);
     }
 }
