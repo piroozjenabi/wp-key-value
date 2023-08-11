@@ -43,7 +43,7 @@ class TagService
             case 'remote_keyval':
                 $tmp = json_decode(trim($in->params));
                 $url = "{$tmp->site}wp-json/key_val/v1/last/?name={$tmp->type}";
-                $data = doCurl($url, type: 'GET');
+                $data = doCurl($url,[] ,'GET');
                 $value = $data[1]['val'] ?? $in->default_value ?? null;
                 $out .= "<input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$value}' {$general} /> ";
                 break;
