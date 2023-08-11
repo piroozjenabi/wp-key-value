@@ -11,44 +11,72 @@ class TagService
     function renderGet(Object $in): string
     {
         $out = "";
+        $id = $in->name;
+        $general =
+            ($in->readonly ? ' readonly ' : '') .
+            ($in->style ? " style='{$in->style}' " : '') .
+            ($in->name ? " id='{$id}' " : '');
+        $in->name = "tags[{$in->id}]";
         switch ($in->type) {
-
             case "wooid":
-                $out .= "<input placeholder='{$in->title}' class='input' type='text' name='{$in->name}' /> ";
+                $out .= "<input placeholder='{$in->title}' class='input {$in->class}' type='text' name='{$in->name}' {$general} /> ";
                 break;
             case "select":
                 $tmp = json_decode(trim($in->params));
-                $out .= "<select name='{$in->name}' class='select' placeholder='{$in->title}'>";
+                $out .= "<select name='{$in->name}' class='select {$in->class}' placeholder='{$in->title}' {$general}>";
                 foreach ($tmp as $key => $val)
                     $out .= "<option value='{$key}'>{$val}</option>";
                 $out .= "</select>";
                 break;
             case "textarea":
-                $out .= "<textarea class='textarea' placeholder='{$in->title}' name='{$in->name}' > </textarea> ";
+                $out .= "<textarea class='textarea {$in->class}' placeholder='{$in->title}' name='{$in->name}' {$general} > </textarea> ";
                 break;
             case "file":
-                $out .= "<input class='input' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' /> ";
+                $out .= "<input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' /> ";
                 break;
             case 'api':
                 $tmp = json_decode(trim($in->params));
                 $data = doCurl($tmp->url);
-                $value = $data[1]->{$tmp->value}?? $in->default_value??null;
-                $out .= "<input class='input' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$value}' /> ";
+                $value = $data[1][$tmp->value] ?? $in->default_value ?? null;
+                $out .= "<input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$value}' {$general} /> ";
                 break;
             case 'remote_keyval':
                 $tmp = json_decode(trim($in->params));
-                $url= "http://{$tmp->site}/wp-json/key_val/v1/last/?name={$tmp->key}";
-                $data = doCurl($url);
-                $value = $data[1]->{$tmp->val}?? $in->default_value??null;
-                $out .= "<input class='input' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$value}' /> ";
+                $url = "{$tmp->site}wp-json/key_val/v1/last/?name={$tmp->type}";
+                $data = doCurl($url, type: 'GET');
+                $value = $data[1]['val'] ?? $in->default_value ?? null;
+                $out .= "<input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$value}' {$general} /> ";
                 break;
             case 'formula':
                 $tmp = json_decode(trim($in->params));
-                $formulajs="";
-                $out .= "<input class='input' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$value}' /> ";
+                $formula = trim($tmp->formula);
+                $replacer = str_replace(['+', '-', '/', '*'], '--', $formula);
+                $var = "";
+                $listener = "";
+                foreach (explode('--', $replacer) as $key =>  $val) {
+                    $var .= " var $val=parseInt(jQuery('#{$val}').val()); ";
+                    $listener .= " jQuery('#{$val}').on('input', function(){ calc{$id}()}); ";
+                }
+
+                $formulajs = "
+                <script>
+                function calc{$id}(){
+                    {$var}
+                    let val = eval('{$formula}');
+                    jQuery('#{$id}').val(val);
+                }
+                {$listener};
+                jQuery('input').on('input',function(){
+                    calc{$id}()
+                });
+                </script>
+                ";
+                $out .= "
+                {$formulajs}
+                <input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' $general /> ";
                 break;
             default:
-                $out .= "<input class='input' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$in->default_value}' /> ";
+                $out .= "<input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$in->default_value}' {$general} /> ";
                 break;
         }
 

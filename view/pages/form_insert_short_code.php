@@ -5,6 +5,9 @@ $tag = loadModel('Tags');
 $tagList = $tag->all();
 $keys = loadModel('Keys');
 $tagValue = loadModel('TagValue');
+$tagService = loadService('TagService');
+
+
 $keyList = $keys->whereIn('name', $data['name']);
 if (isset($_POST['submit'])) {
     $value = $_POST['value'];
@@ -50,7 +53,7 @@ if ($keyList) {
                 <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
                     <div class="tags">
                         <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
-                            <?= renderTagInput($value) ?>
+                            <?= $tagService->renderGet($value) ?>
                         </label>
                     </div>
                 <?php endforeach ?>

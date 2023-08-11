@@ -4,6 +4,7 @@ $keyVal = loadModel('KeyVal');
 $tags = loadModel('Tags');
 $tagValue = loadModel('TagValue');
 $tagList = $tags->all();
+$tagService = loadService('TagService');
 
 
 if (isset($_POST['edit']) && $_POST['edit'] && $data['isTagEditable']) {
@@ -38,7 +39,7 @@ $list = $keyVal->getListByKeys($data['name']);
                 <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
                     <div class="tags">
                         <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
-                            <?= renderTagInput($value) ?>
+                            <?= $tagService->renderGet($value) ?>
                         </label>
                     </div>
                 <?php endforeach ?>

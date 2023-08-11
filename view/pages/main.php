@@ -10,6 +10,44 @@ $tagListFile = $tags->find(['type' => 'file']);
 $tagService = loadService('TagService');
 
 ?>
+
+<?php
+if (isset($_POST['delete']) && $_POST['delete']) {
+    $keyVal->delete($_POST['delete']);
+    echo "<div class='notice'>Value is deleted</div>";
+}
+
+
+
+if (isset($_POST['submit'])) {
+    $value = $_POST['value'];
+    $key = $_POST['key_id'];
+    $tags = $_POST['tags'];
+
+
+    if (!$key) {
+        echo "<div class='notice notice-error'>key is required</div>";
+    } else {
+        $res = $keyVal->insert(['val' => $value, 'key_id' => $key]);
+        if (isset($res)) {
+
+            if ($tags) {
+                foreach ($tagListFile as $key => $val) {
+                    $uploadRes = upload($val->name);
+
+                    $tags[$val->id] = $uploadRes[0] ? $uploadRes[1] : $tags[$val->id];
+                }
+                $tagValue->insertBulk($res->id, $tags);
+            }
+            echo "<div class='notice notice-success'> value submitted successfully</div>";
+        } else {
+
+            echo "<div class='notice notice-error'>Error in save value</div>";
+        }
+    }
+}
+
+?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="wrap">
     <h1 class="wp-heading-inline">Key Val Manager </h1>
@@ -182,43 +220,7 @@ $tagService = loadService('TagService');
     </div>
 
 
-    <?php
-    if (isset($_POST['delete']) && $_POST['delete']) {
-        $keyVal->delete($_POST['delete']);
-        echo "<div class='notice'>Value is deleted</div>";
-    }
 
-
-
-    if (isset($_POST['submit'])) {
-        $value = $_POST['value'];
-        $key = $_POST['key_id'];
-        $tags = $_POST['tags'];
-
-
-        if (!$key) {
-            echo "<div class='notice notice-error'>key is required</div>";
-        } else {
-            $res = $keyVal->insert(['val' => $value, 'key_id' => $key]);
-            if (isset($res)) {
-
-                if ($tags) {
-                    foreach ($tagListFile as $key => $val) {
-                        $uploadRes = upload($val->name);
-
-                        $tags[$val->id] = $uploadRes[0] ? $uploadRes[1] : $tags[$val->id];
-                    }
-                    $tagValue->insertBulk($res->id, $tags);
-                }
-                echo "<div class='notice notice-success'> value submitted successfully</div>";
-            } else {
-
-                echo "<div class='notice notice-error'>Error in save value</div>";
-            }
-        }
-    }
-
-    ?>
     <script>
         jQuery(document).ready(function() {
             jQuery('#tabs li').on('click', function() {
