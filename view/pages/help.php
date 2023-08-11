@@ -10,7 +10,7 @@ $keys = $key->all();
 $names = null;
 ?>
 
-<div class="wrap">
+<div class="wrap box">
 
 
     <h1 class="wp-heading-inline">Help for wordpress key val</h1>

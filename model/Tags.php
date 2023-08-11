@@ -7,6 +7,7 @@ class Tags extends Model
 
     public $type = [
         ['key' => "text", 'value' => "Text Box"],
+        ['key' => "textarea", 'value' => "Text Area Box"],
         ['key' => "number", 'value' => "Number Box"],
         ['key' => "url", 'value' => "Url Box"],
         ['key' => "email", 'value' => "Email Box"],
@@ -17,9 +18,11 @@ class Tags extends Model
         ['key' => "range", 'value' => "Range input"],
         ['key' => "checkbox", 'value' => "Check Box"],
         ['key' => "date", 'value' => "Date Box"],
-        ['key' => "formula", 'value' => "Formula Box"],
         ['key' => "select", 'value' => "Select Box"],
         ['key' => "wooid", 'value' => "Woocomerce Id"],
+        ['key' => "formula", 'value' => "Formula Box"],
+        ['key' => "api", 'value' => "api"],
+        ['key' => "remote_keyval", 'value' => "remote key_val"],
     ];
     function __construct()
     {

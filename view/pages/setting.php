@@ -15,8 +15,10 @@ if (isset($_POST['submit'])) {
 ?>
 
 <div class="wrap">
-    <h1>Key-val Setting</h1>
-        <div class="col-wrap">
+    <div class="col-wrap">
+        <div class="box">
+            <h1>Key-val Setting</h1>
+
             <form action="" method="post">
                 <table class="form-table" role="presentation">
 
@@ -33,3 +35,4 @@ if (isset($_POST['submit'])) {
                 <?php submit_button(); ?>
             </form>
         </div>
+    </div>

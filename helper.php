@@ -89,6 +89,18 @@ function loadModel($model): object
 }
 
 /**
+ * load service 
+ *
+ * @param string $service
+ * @return Object
+ */
+function loadService($service): object
+{
+    require_once __DIR__ . '/service/' . $service . '.php';
+    return (new $service());
+}
+
+/**
  * make slug of integer
  */
 function slug($str, $delimiter = '_')
@@ -99,28 +111,7 @@ function slug($str, $delimiter = '_')
 
 function renderTagInput($in)
 {
-    $out = "";
-    switch ($in->type) {
-
-        case "wooid":
-            $out .= "<input placeholder='{$in->title}' type='text' name='{$in->fieldName}' /> ";
-            break;
-        case "select":
-            $tmp = json_decode(trim($in->params));
-            $out .= " <select name='{$in->fieldName}' placeholder='{$in->title}'>";
-            foreach ($tmp as $key => $val)
-                $out .= "<option value='{$key}'>{$val}</option>";
-            $out .= "</select>";
-            break;
-        case "file":
-            $out .= "<input placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' /> ";
-            break;
-        default:
-            $out .= "<input placeholder='{$in->title}' type='{$in->type}' name='{$in->fieldName}' /> ";
-            break;
-    }
-
-    return $out;
+  
 }
 /**
  * return show tag html
@@ -150,4 +141,11 @@ function upload(String $name): array
     return $atachId
         ? [1, $atachId]
         : [0, 'error in upload'];
+}
+
+
+function loadStyle($name, $file) {
+    wp_enqueue_style('wp-key-val'.$name, plugin_dir_url(__FILE__) . 'view/style/'.$file);
+
+  
 }

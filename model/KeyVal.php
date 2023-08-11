@@ -23,9 +23,10 @@ class KeyVal extends Model
         $table_tag_val = $this->db->prefix . "key_val_tag_value";
 
         $con = 'WHERE 1=1 ';
-        foreach ($conditions as $key => $val) {
-            $con .= " AND {$key} = '{$val}'";
-        }
+        if($conditions)
+            foreach ($conditions as $key => $val) {
+                $con .= " AND {$key} = '{$val}'";
+            }
         $con .= $keyIds ? " AND t1.key_id in ({$keyIds}) " : '';
         $list = $this->query(
             "SELECT  t1.*, t2.*,
@@ -54,7 +55,7 @@ class KeyVal extends Model
                     'created_type' => $val->created_type,
                     'name' => $val->name,
                     'title' => $val->title,
-                    'tag_type' => $val->type,
+                    'tag_type' => $val->tag_type,
                 ];
 
             @$out[$val->vid]['tags'][$val->tag_id] = [
