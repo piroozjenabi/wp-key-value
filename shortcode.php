@@ -32,15 +32,15 @@ function get_history_short_code($atts)
     view('table_short_code','',[
         'name' => $name , 
         'isTagEditable' => !($atts['isTagEditable'] ? true : false)
-    ]);
+    ], true);
 }
 
 function key_val_form_insert_short_code($atts){
     $name = $atts['name'] ?? null;
-    view('form_insert_short_code', '', ['name' => $name]);
+    view('form_insert_short_code', '', ['name' => $name],true);
 }
 
 function key_val_search($atts){
     $tag = $atts['tag'] ?? null;
-    view('search_short_code', '', ['tag' => $tag]);
+    view('search_short_code', '', ['tag' => $tag],true);
 }

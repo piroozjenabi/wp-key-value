@@ -69,11 +69,12 @@ function ApiKeyGen()
  * @param array $data
  * @return void
  */
-function view($page, $title = '', $data = [])
+function view($page, $title = '', $data = [],$disableCP=false)
 {
     include 'view/layouts/header.php';
     include "view/pages/{$page}.php";
-    include 'view/layouts/footer.php';
+    if(!$disableCP)
+        include 'view/layouts/footer.php';
 }
 
 /**
