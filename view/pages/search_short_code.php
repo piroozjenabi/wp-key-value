@@ -15,7 +15,7 @@ if (isset($_POST['search']) && $_POST['search']) {
         ]);
     }else{
         $list = $keyVal->list(1, [
-            't1.val' => $data['tag'],
+            't1.val' => $value,
         ]);
     }
 }
