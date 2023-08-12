@@ -36,8 +36,6 @@ if ($keyList) {
             <input type="text" placeholder="<?= get_option('valueLabel') ?>" name="value" />
             <?php if (count($keyList) > 1) : ?>
                 <select name="key_id">
-
-                    <option value="">select key</option>
                     <?php foreach ($keyList as $key => $value) : ?>
                         <option value=" <?= $value->id ?>"> <?= $value->title ?> </option>
                     <?php endforeach ?>
@@ -49,7 +47,6 @@ if ($keyList) {
 
             <button type="submit" name="submit" value="submit" class="button"> Add new Val + </button>
             <?php if ($tagList) : ?>
-                <hr />
                 <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
                     <div class="tags">
                         <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
