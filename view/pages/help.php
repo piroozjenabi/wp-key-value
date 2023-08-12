@@ -36,13 +36,15 @@ $names = null;
     <h3>search shortcut</h3>
     <div>
         <code>[key_val_search]</code><br />
-        <code>[key_val_search tag="tag1"]</code><br />
+        <code>[key_val_search tag="tag1" search_text="Type here ..." search_button="search"]</code><br />
 
-        <?php echo do_shortcode("[key_val_search tag='order_id']"); ?>
+        <?php echo do_shortcode('[key_val_search search_text="Type here ..." search_button="search" ]'); ?>
 
         <p>
             <b>below params:</b> <br />
             tags:search in tag <br />
+            search_text:input search text <br />
+            search_button:button text search <br />
         </p>
     </div>
     <hr />
@@ -56,9 +58,9 @@ $names = null;
     <?php endforeach; ?>
     <hr />
     <h3>For short codes HISTORY VAL</h3>
-    <code>[key_val_last name="{name}" isTagEditable="true|false"]</code><br />
+    <code>[key_val_history name="{name}" isTagEditable="true|false" isInline="true|false"]</code><br />
     <?php foreach ($keys as $key => $value) : ?>
-        <p>for show last VAL of <?= $value->name ?></p>
+        <p>for show history VAL of <?= $value->name ?></p>
         <code>[key_val_history name="<?= $value->name ?>"]</code><br />
         <?php echo do_shortcode("[key_val_history name='{$value->name}']"); ?>
     <?php endforeach; ?>

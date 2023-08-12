@@ -31,7 +31,8 @@ function get_history_short_code($atts)
     $name = $atts['name'] ?? null;
     view('table_short_code','',[
         'name' => $name , 
-        'isTagEditable' => !($atts['isTagEditable'] ? true : false)
+        'isTagEditable' => !($atts['isTagEditable'] ? true : false),
+        'isInline' => !($atts['isInline'] ? true : false),
     ], true);
 }
 
@@ -41,6 +42,5 @@ function key_val_form_insert_short_code($atts){
 }
 
 function key_val_search($atts){
-    $tag = $atts['tag'] ?? null;
-    view('search_short_code', '', ['tag' => $tag],true);
+    view('search_short_code', '', $atts,true);
 }

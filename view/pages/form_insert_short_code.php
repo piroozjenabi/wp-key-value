@@ -31,31 +31,49 @@ if (isset($_POST['submit'])) {
 if ($keyList) {
 ?>
 
-    <div class="wrap">
+    <div class="box">
         <form action="" method="post" enctype="multipart/form-data">
-            <input type="text" placeholder="<?= get_option('valueLabel') ?>" name="value" />
-            <?php if (count($keyList) > 1) : ?>
-                <select name="key_id">
-                    <?php foreach ($keyList as $key => $value) : ?>
-                        <option value=" <?= $value->id ?>"> <?= $value->title ?> </option>
-                    <?php endforeach ?>
 
-                </select>
+            <div class="field">
+                <label class="label"><?= get_option('valueLabel') ?></label>
+                <div class="control">
+                    <input type="text" class="input" placeholder="<?= get_option('valueLabel') ?>" name="value" />
+                </div>
+            </div>
+
+
+            <?php if (count($keyList) > 1) : ?>
+                <div class="field">
+                    <label class="label">key</label>
+                    <div class="control">
+                        <select class="input select" name="key_id">
+                            <option value="">select key</option>
+
+                            <?php foreach ($keyList as $key => $value) : ?>
+                                <option value=" <?= $value->id ?>"> <?= $value->title ?> </option>
+                            <?php endforeach ?>
+
+                        </select>
+                    </div>
+                </div>
             <?php elseif (count($keyList) == 1) : ?>
                 <input type="hidden" name="key_id" value="<?= $keyList[0]->id ?>" />
             <?php endif; ?>
 
-            <button type="submit" name="submit" value="submit" class="button"> Add new Val + </button>
             <?php if ($tagList) : ?>
                 <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
-                    <div class="tags">
-                        <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
+                    <div class="field">
+                        <label class="label"><?= $value->title ?></label>
+                        <div class="control">
                             <?= $tagService->renderGet($value) ?>
-                        </label>
+                        </div>
                     </div>
+
                 <?php endforeach ?>
 
             <?php endif; ?>
+            <button type="submit" name="submit" value="submit" class="button is-primary is-fullwidth is-rounded">
+                Submit <span class="dashicons dashicons-saved"></span> </button>
         </form>
     </div>
 <?php } else { ?>

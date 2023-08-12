@@ -35,19 +35,22 @@ $list = $keyVal->getListByKeys($data['name']);
         <h4><?= $key->title ?></h4>
         <div>
             <?php if ($tagList && $data['isTagEditable']) : ?>
-                <br />
-                <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
-                    <div class="tags">
-                        <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>:
-                            <?= $tagService->renderGet($value) ?>
-                        </label>
+                <div class="field <?= $data['isInline'] ? ' is-grouped is-grouped-multiline ' : '' ?>">
+                    <div class="control">
+                        <br />
+                        <button type="submit" name="edit" value="submit" class="button is-primary is-rounded "> <span class="dashicons dashicons-saved"></span> </button>
                     </div>
-                <?php endforeach ?>
-
-                <button type="submit" name="edit" value="submit" class="button"> Edit </button>
+                    <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
+                        <div class="control">
+                            <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>
+                                <?= $tagService->renderGet($value) ?>
+                            </label>
+                        </div>
+                    <?php endforeach ?>
+                </div>
             <?php endif; ?>
         </div>
-        <table class='table' style='width:100%' class='key-val-table'>
+        <table class="table is-bordered is-striped is-fullwidth is-narrow is-hoverable">
             <?php foreach ($list as $key => $value) : ?>
 
                 <tr>
@@ -65,7 +68,7 @@ $list = $keyVal->getListByKeys($data['name']);
 
                         <form method="post" onsubmit="return confirm('Are you sure to DELETE?') ">
                             <input type="hidden" name="delete" value="<?= $value['vid'] ?>" />
-                            <button class="button" style="background:#ffaaaa">Delete</button>
+                            <button class="button is-danger" >Delete</button>
                         </form>
                     </td>
                 </tr>
