@@ -45,9 +45,8 @@ $results = $tags->all();
     <h1 class="wp-heading-inline">Manage Key TAGS </h1>
     <div class="columns">
 
-        <div class="column is-3 is-12-mobile ">
+        <div class="column is-4 is-12-mobile ">
             <div class="box">
-                <h2>Add new Tag</h2>
                 <form action="" method="post">
                     <button type="submit" name="submit" value="submit" class="button is-primary is-fullwidth is-rounded"> Submit <span class="dashicons dashicons-saved"></span> </button>
 
