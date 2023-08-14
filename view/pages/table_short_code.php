@@ -43,6 +43,7 @@ $list = $keyVal->getListByKeys($data['name']);
                     <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
                         <div class="control">
                             <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>
+                                <?php if($val->type == 'textarea') $val->type = "text"; ?>
                                 <?= $tagService->renderGet($value) ?>
                             </label>
                         </div>

@@ -43,9 +43,10 @@ class KeyVal extends Model
         );
 
         $i = 1;
-        
+        $indexes = [];
         foreach ($list as $key => $val) {
             if (@!$out[$val->vid])
+                $indexes[] = $val->vid;
                 $out[$val->vid] = [
                     'id' => $val->key_id,
                     'vid' => $val->vid,
@@ -67,7 +68,8 @@ class KeyVal extends Model
                 $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=".renderTagShow($val->tag_value,$val->tag_type);
             $i++;
         }
-
+        if($out)
+            $out['indexes'] =$indexes;
         return $out;
     }
 

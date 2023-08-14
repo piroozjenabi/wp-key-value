@@ -13,7 +13,8 @@ if (isset($_POST['search']) && $_POST['search']) {
             't4.name' => $data['tag'],
             't3.value' => $value
         ]);
-    }else{
+    } else {
+
         $list = $keyVal->list(1, [
             't1.val' => $value,
         ]);
@@ -26,7 +27,7 @@ if (isset($_POST['search']) && $_POST['search']) {
     <form action="" method="post">
         <div class="field has-addons">
             <div class="control">
-                <input class="input is-primary is-medium" type="text" placeholder="<?= $data['search_text'] ?>" name="keyword" />
+                <input class="input is-primary is-medium" value="<?= old('keyword') ?>" type="text" placeholder="<?= $data['search_text'] ?>" name="keyword" />
             </div>
             <div class="control">
                 <button type="submit" name="search" value="search" class="button is-primary is-medium"> <?= $data['search_button'] ?> </button>
@@ -37,8 +38,8 @@ if (isset($_POST['search']) && $_POST['search']) {
 </div>
 <?php if (isset($_POST['search']) && $_POST['search']) :  ?>
     <?php if ($list) : ?>
-        <table class="table is-bordered is-striped is-fullwidth is-narrow is-hoverable" >
-            <?php foreach ($list[10] as $key => $val) :
+        <table class="table is-bordered is-striped is-fullwidth is-narrow is-hoverable">
+            <?php foreach ($list[$list['indexes'][0]] as $key => $val) :
                 if ($key == 'id') continue;
                 if ($key == 'tags') continue;
 
@@ -55,6 +56,6 @@ if (isset($_POST['search']) && $_POST['search']) {
         </table>
 
     <?php else : ?>
-        <div class='notice'>data not found</div>
+        <div class='notification'>data not found</div>
     <?php endif; ?>
 <?php endif; ?>

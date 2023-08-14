@@ -146,7 +146,9 @@ function upload(String $name): array
 
 
 function loadStyle($name, $file) {
-    wp_enqueue_style('wp-key-val'.$name, plugin_dir_url(__FILE__) . 'view/style/'.$file);
+    wp_enqueue_style('wp-key-val'.$name, plugin_dir_url(__FILE__) . 'view/style/'.$file);  
+}
 
-  
+function old($name, $default=null){
+    return $_POST[$name]?? $_POST[$name]??$default;
 }
