@@ -145,7 +145,6 @@ if (isset($_POST['submit'])) {
                                 $labels = [];
                                 
                                 foreach ($results as $result) {
-                                    kvdd($result, 0);
                                     $creator = $result['created_by'] ? get_user_by('ID', $result['created_by']) : '';
 
                                     $data[$result['title']][] = $result['val'];
