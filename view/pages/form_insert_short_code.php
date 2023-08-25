@@ -62,6 +62,11 @@ if ($keyList) {
 
             <?php if ($tagList) : ?>
                 <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
+                <?php
+                    if(!empty($data['tags']))
+                        if(!(strstr($data['tags'], $value->name) ))
+                            continue;
+                ?>
                     <div class="field">
                         <label class="label"><?= $value->title ?></label>
                         <div class="control">

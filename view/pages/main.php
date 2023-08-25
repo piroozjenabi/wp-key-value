@@ -120,7 +120,8 @@ if (isset($_POST['submit'])) {
                         <div class="is-active table-container" data-content="1">
                             <?php
                             // list of values
-                            $results = $keyVal->list();
+                            $results = $keyVal->list(100, null, null, false);
+                            
                             if (!$results) {
                                 echo '
                                 <p class="update-nag notice notice-warning inline">
@@ -142,7 +143,9 @@ if (isset($_POST['submit'])) {
                                 </tr>';
                                 $data = [];
                                 $labels = [];
+                                
                                 foreach ($results as $result) {
+                                    kvdd($result, 0);
                                     $creator = $result['created_by'] ? get_user_by('ID', $result['created_by']) : '';
 
                                     $data[$result['title']][] = $result['val'];

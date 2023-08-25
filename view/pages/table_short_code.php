@@ -41,9 +41,14 @@ $list = $keyVal->getListByKeys($data['name']);
                         <button type="submit" name="edit" value="submit" class="button is-primary is-rounded "> <span class="dashicons dashicons-saved"></span> </button>
                     </div>
                     <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
+                        <?php
+                        if (!empty($data['tags']))
+                            if (!(strstr($data['tags'], $value->name)))
+                                continue;
+                        ?>
                         <div class="control">
                             <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>
-                                <?php if($val->type == 'textarea') $val->type = "text"; ?>
+                                <?php if($value->type == 'textarea') $value->type = "text"; ?>
                                 <?= $tagService->renderGet($value) ?>
                             </label>
                         </div>

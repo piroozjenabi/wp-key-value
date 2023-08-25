@@ -21,7 +21,7 @@ class Model
      */
     function query($query): array
     {
-        return $this->db->get_results($this->db->prepare($query,));
+        return $this->db->get_results($query);
     }
 
     /**
@@ -73,7 +73,7 @@ class Model
     {
         $set = '';
         foreach ($data as $key => $val)
-            $set .= " {$key} = '{$val}' ,";
+            $set .= " `{$key}` = '{$val}' ,";
         $set = substr($set, 0, -1);
         $updateQuery = "UPDATE {$this->table}
          SET {$set}
@@ -86,7 +86,7 @@ class Model
      * update query
      *
      * @param array $data
-     * @return void
+     * @return object
      */
     function insert($data)
     {

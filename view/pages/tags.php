@@ -9,8 +9,26 @@ if (isset($_POST['delete']) && $_POST['delete']) {
     echo "<div class='notice'>tag is deleted</div>";
 }
 
-//add price
-if (isset($_POST['submit'])) {
+$editData = [];
+if (isset($_POST['edit']) && $_POST['edit']) {
+    $editData = $tags->findById($_POST['edit'])[0] ?? [];
+    // kvdd($editData);
+    echo "<div class='notification is-primary is-light'>{$editData->title} is editing</div>";
+}
+if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
+    $editData = $tags->findById($_POST['edit_confirm'])[0] ?? null;
+    if (!$editData)
+        echo "<div class='notification is-danger is-light'>Data not found !! </div>";
+    $tags->update($editData->id, [
+        'name' => $_POST['name'],
+        'title' => $_POST['title'],
+        'default_value' => $_POST['default'],
+        'type' => $_POST['type'],
+        'params' => $_POST['params'],
+    ]);
+    echo "<div class='notification is-primary is-light'>{$editData->title} is editing</div>";
+} else if (isset($_POST['submit'])) {
+    //add price
     $name = $_POST['name'];
     $title = $_POST['title'];
     $type = $_POST['type'];
@@ -53,26 +71,26 @@ $results = $tags->all();
                     <div class="field">
                         <label class="label">Name</label>
                         <div class="control">
-                            <input class="input " type="text" placeholder="name" name="name" value="<?= "field" . time() ?>" />
+                            <input class="input" type="text" placeholder="name" name="name" value="<?= old('name', $editData->name ?? "field" . time())  ?>" />
                         </div>
                     </div>
                     <div class="field">
                         <label class="label">Title</label>
                         <div class="control">
-                            <input class="input " type="text" placeholder="title" name="title" />
+                            <input class="input" type="text" placeholder="title" value="<?= old('title', $editData->title ?? '') ?>" name="title" />
                         </div>
                     </div>
                     <div class="field">
                         <div class="field">
                             <label class="label">default value</label>
                             <div class="control">
-                                <input class="input " type="text" placeholder="default" name="default" />
+                                <input class="input" type="text" placeholder="default" name="default" value="<?= old('default', $editData->default ?? '') ?>" />
                             </div>
                         </div>
                         <div class="field">
                             <label class="label">Class</label>
                             <div class="control">
-                                <input class="input " type="text" placeholder="class" name="class" />
+                                <input class="input " type="text" placeholder="class" name="class" value="<?= old('class', $editData->class ?? '') ?>" />
                             </div>
                         </div>
                         <div class="field">
@@ -93,7 +111,7 @@ $results = $tags->all();
 
                         <div class="field">
                             <label for="readonly">
-                                <input type="checkbox" name="readonly" value="1" />
+                                <input type="checkbox" name="readonly" value="1" value="<?= old('readonly', $editData->readonly ?? '') ?>" />
                                 Read only</label>
 
                         </div>
@@ -101,7 +119,7 @@ $results = $tags->all();
                         <div class="field">
                             <label class="label">Params</label>
                             <div class="control">
-                                <textarea name="params" placeholder="params for type" class="textarea"> </textarea>
+                                <textarea name="params" placeholder="params for type" class="textarea"><?= old('params', $editData->params ?? '') ?></textarea>
                                 <table class="table is-fullwidth is-narrow">
                                     <tr>
                                         <td>
@@ -140,6 +158,7 @@ $results = $tags->all();
                             </div>
                         </div>
 
+                        <input type="hidden" name="edit_confirm" value="<?= $editData->id ?>" />
                 </form>
             </div>
 
@@ -169,10 +188,16 @@ $results = $tags->all();
                             <td> <?= $result->type ?></td>
                             <td> <?= $tagService->renderGet($result) ?></td>
                             <td>
-                                <form method="post" onsubmit="return confirm('Are you sure to DELETE?') ">
-                                    <input type="hidden" name="delete" value="<?= $result->id  ?>" />
-                                    <button class="button is-danger">Delete</button>
-                                </form>
+                                <div class="field has-addons">
+                                    <form method="post" class="control" onsubmit="return confirm('Are you sure to DELETE?') ">
+                                        <input type="hidden" name="delete" value="<?= $result->id  ?>" />
+                                        <button class="button is-danger "><span class="dashicons dashicons-trash "></span></button>
+                                    </form>
+                                    <form method="post">
+                                        <input type="hidden" class="control" name="edit" value="<?= $result->id  ?>" />
+                                        <button class="button is-primary"><span class="dashicons dashicons-edit"></span></button>
+                                    </form>
+                                </div>
                             </td>
 
                         </tr>

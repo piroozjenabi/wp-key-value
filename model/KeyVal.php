@@ -15,7 +15,7 @@ class KeyVal extends Model
      *
      * @return void
      */
-    function list($limit = 400, $conditions = null, $keyIds = null)
+    function list($limit = 400, $conditions = null, $keyIds = null, $witIndexes=true)
     {
         $out = [];
         $table_key = $this->db->prefix . "key_val_keys";
@@ -68,7 +68,7 @@ class KeyVal extends Model
                 $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=".renderTagShow($val->tag_value,$val->tag_type);
             $i++;
         }
-        if($out)
+        if($witIndexes &&  $out)
             $out['indexes'] =$indexes;
         return $out;
     }

@@ -149,6 +149,13 @@ function loadStyle($name, $file) {
     wp_enqueue_style('wp-key-val'.$name, plugin_dir_url(__FILE__) . 'view/style/'.$file);  
 }
 
+/**
+ * return value for inputs
+ *
+ * @param string $name
+ * @param string $default
+ * @return void
+ */
 function old($name, $default=null){
-    return $_POST[$name]?? $_POST[$name]??$default;
+    return $_POST[$name]?? $_POST[$name]??$default??null;
 }

@@ -38,7 +38,8 @@ function get_history_short_code($atts)
 
 function key_val_form_insert_short_code($atts){
     $name = $atts['name'] ?? null;
-    view('form_insert_short_code', '', ['name' => $name],true);
+    $tags = $atts['tags'] ?? null;
+    view('form_insert_short_code', '', ['name' => $name, 'tags' => $tags ],true);
 }
 
 function key_val_search($atts){

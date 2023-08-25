@@ -28,4 +28,6 @@ class Tags extends Model
     {
         parent::__construct('key_val_tags');
     }
+
+
 }

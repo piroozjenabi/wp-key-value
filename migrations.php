@@ -66,6 +66,15 @@ defined('ABSPATH') || exit;
   ) $charset_collate;";
   dbDelta($sql);
 
+  $table_name = $wpdb->prefix . "key_val_tag_type";
+  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `tag_id` INT NOT NULL ,
+  `type_id` INT NOT NULL ,
+  PRIMARY KEY (id)
+  ) $charset_collate;";
+  dbDelta($sql);
+
 
 
 ?>
