@@ -29,8 +29,11 @@ function get_last_short_code($atts)
 function get_history_short_code($atts)
 {
     $name = $atts['name'] ?? null;
+    $tags = $atts['tags'] ?? null;
+
     view('table_short_code','',[
-        'name' => $name , 
+        'name' => $name ,
+        'tags' => $tags ,
         'isTagEditable' => !($atts['isTagEditable'] ? true : false),
         'isInline' => !($atts['isInline'] ? true : false),
     ], true);

@@ -88,7 +88,7 @@ class KeyVal extends Model
             $ids[] = $val->id;
         }
         $idsConditions = '"' . implode('","', $ids) . '"';
-        return $this->list(100, '', $idsConditions);
+        return $this->list(100, '', $idsConditions,false);
     }
 
     /**
