@@ -34,6 +34,7 @@ if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
     $type = $_POST['type'];
     $params = $_POST['params'];
     $readonly = $_POST['readonly'];
+    $is_active = $_POST['is_active'];
     $default = $_POST['default'];
     if (!$name) {
         echo "<div class='notice notice-error'>name is required</div>";
@@ -44,7 +45,7 @@ if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
             'title' => $title,
             'type' => $type,
             'params' => $params,
-            'readonly' => $readonly,
+            'is_active' => $is_active,
             'class' => $class,
             'style' => $style,
             'default_value' => $default
@@ -109,6 +110,12 @@ $results = $tags->all();
                             </div>
                         </div>
 
+                        <div class="field">
+                            <label for="isActive">
+                                <input type="checkbox" name="is_active" value="1" value="<?= old('readonly', $editData->is_active ?? '') ?>" />
+                                show in submit form (active)</label>
+
+                        </div>
                         <div class="field">
                             <label for="readonly">
                                 <input type="checkbox" name="readonly" value="1" value="<?= old('readonly', $editData->readonly ?? '') ?>" />
