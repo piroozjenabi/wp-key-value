@@ -3,7 +3,7 @@ defined('ABSPATH') || exit;
 $keys = loadModel('Keys');
 $keyVal = loadModel('KeyVal');
 $tags = loadModel('Tags');
-
+$tagsList = $tags->all();
 // delete type
 if (isset($_POST['delete']) && $_POST['delete']) {
     $keys->delete($_POST['delete']);
@@ -11,8 +11,24 @@ if (isset($_POST['delete']) && $_POST['delete']) {
     echo "<div class='notice'>Key is deleted</div>";
 }
 
-//add type
-if (isset($_POST['submit'])) {
+$editData = [];
+if (isset($_POST['edit']) && $_POST['edit']) {
+    $editData = $keys->findById($_POST['edit'])[0] ?? [];
+    echo "<div class='notification is-primary is-light'>{$editData->title} is editing</div>";
+}
+if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
+    $editData = $keys->findById($_POST['edit_confirm'])[0] ?? null;
+    if (!$editData)
+        echo "<div class='notification is-danger is-light'>Data not found !! </div>";
+    $keys->update($editData->id, [
+        'name' => $_POST['name'],
+        'title' => $_POST['title'],
+        // 'default_value' => $_POST['default'],
+        // 'tags' => $_POST['tags'],
+        // 'api_key' => ($_POST['hasApiKey'] && empty($editData->api_key)) ? ApiKeyGen() : '',
+    ]);
+    echo "<div class='notification is-primary is-light'>{$editData->title} updated</div>";
+} else if (isset($_POST['submit'])) {
     $name = slug($_POST['name']);
     $title = $_POST['title'];
     $api_key = $_POST['hasApiKey'] ? ApiKeyGen() : '';
@@ -42,18 +58,18 @@ $results = $keys->all();
                     <div class="field">
                         <label class="label">Name for slug api</label>
                         <div class="control">
-                            <input class="input " type="text" placeholder="name for slug api" name="name" />
+                            <input class="input " type="text" placeholder="name for slug api" name="name" value="<?= old('name', $editData->name ?? '')  ?>" />
                         </div>
                     </div>
                     <div class="field">
                         <label class="label">Title</label>
                         <div class="control">
-                            <input class="input " type="text" placeholder="title" name="title" />
+                            <input class="input " type="text" placeholder="title" name="title" value="<?= old('title', $editData->title ?? '')  ?>" />
                         </div>
                     </div>
                     <div class="field">
                         <label for="apiKey">
-                            <input type="checkbox" name="hasApiKey" value="1" />
+                            <input type="checkbox" name="hasApiKey" value="1" value="<?= old('hasApiKey', $editData->api_key ? true : false ?? '')  ?>" />
                             Has api key?</label>
 
                     </div>
@@ -61,8 +77,9 @@ $results = $keys->all();
                         <label class="label">tags</label>
                         <div class="control">
                             <div class="select is-multiple is-fullwidth">
+
                                 <select multiple size="4" name="tags[]">
-                                    <?php foreach ($tags->all() as $tag) : ?>
+                                    <?php foreach ($tagsList as $tag) : ?>
                                         <option value="<?= $tag->id ?>"> <?= $tag->title ?></option>
                                     <?php endforeach; ?>
                                 </select>
@@ -71,6 +88,7 @@ $results = $keys->all();
                             <p><small>Press ctrl for select multiple</small></p>
                         </div>
                     </div>
+                    <input type="hidden" name="edit_confirm" value="<?= $editData->id ?>" />
 
                     <button type="submit" name="submit" value="submit" class="button is-primary is-fullwidth is-rounded"> Submit <span class="dashicons dashicons-saved"></span> </button>
                 </form>

@@ -26,7 +26,7 @@ if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
         'type' => $_POST['type'],
         'params' => $_POST['params'],
     ]);
-    echo "<div class='notification is-primary is-light'>{$editData->title} is editing</div>";
+    echo "<div class='notification is-primary is-light'>{$editData->title} is updated</div>";
 } else if (isset($_POST['submit'])) {
     //add price
     $name = $_POST['name'];

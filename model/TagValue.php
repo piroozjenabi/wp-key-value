@@ -20,6 +20,7 @@ class TagValue extends Model {
         foreach($data as $key => $value){
             if(!$value) continue;
             if(!$key) continue;
+            
             $this->insert([
                 'key_val_id' => $key_val_id,
                 'tag_id' => intval($key),

@@ -30,7 +30,7 @@ class KeyVal extends Model
         $con .= $keyIds ? " AND t1.key_id in ({$keyIds}) " : '';
         $list = $this->query(
             "SELECT  t1.*, t2.*,
-                t4.id AS tag_id,t4.name AS tag_name,t4.title AS tag_title, t4.type AS tag_type, 
+                t3.tag_id AS tag_id,t4.name AS tag_name,t4.title AS tag_title, t4.type AS tag_type, 
                 t3.value AS tag_value ,t1.id AS vid , t1.created_at AS created_at,
                 t1.created_by AS created_by,t1.created_type AS created_type
                 FROM 
@@ -58,18 +58,21 @@ class KeyVal extends Model
                     'title' => $val->title,
                     'tag_type' => $val->tag_type,
                 ];
-
+            
             @$out[$val->vid]['tags'][$val->tag_id] = [
                 'name' => $val->tag_name,
                 'title' => $val->tag_title,
                 'value' => $val->tag_value
             ];
+           
             if (@$val->tag_title)
                 $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=".renderTagShow($val->tag_value,$val->tag_type);
+            kvdd($out,0);
             $i++;
         }
         if($witIndexes &&  $out)
             $out['indexes'] =$indexes;
+            kvdd($out);
         return $out;
     }
 
