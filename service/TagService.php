@@ -57,6 +57,7 @@ class TagService
                 $listener = "";
                 foreach (explode('--', $replacer) as $key =>  $val) {
                     $val = str_replace(['(',')','+','-','*','#'], '', $val);
+		    if (!$val || strstr($val, 'field') === false ) continue;	
                     $var .= " var $val=parseInt(jQuery('#{$val}').val()); ";
                     $listener .= " jQuery('#{$val}').on('input', function(){ calc{$id}()}); ";
                 }
@@ -76,7 +77,7 @@ class TagService
                 ";
                 $out .= "
                 {$formulajs}
-                <input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' $general /> ";
+                <input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' {$general} /> ";
                 break;
             default:
                 $out .= "<input class='input {$in->class}' placeholder='{$in->title}' type='{$in->type}' name='{$in->name}' value='{$in->default_value}' {$general} /> ";

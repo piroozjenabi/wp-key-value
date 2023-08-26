@@ -81,6 +81,48 @@ if ($keyList) {
                 Submit <span class="dashicons dashicons-saved"></span> </button>
         </form>
     </div>
+
+
+	<script>
+
+
+	jQuery(function() {
+		
+		var $form = jQuery( "form" );
+		var $input = $form.find( "input[type=text]" );
+
+		$input.on( "keyup", function( event ) {
+			
+			
+			// When user select text in the document, also abort.
+			var selection = window.getSelection().toString();
+			if ( selection !== '' ) {
+				return;
+			}
+			
+			// When the arrow keys are pressed, abort.
+			if ( jQuery.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+				return;
+			}
+			
+			
+			var $this = jQuery( this );
+			
+			// Get the value.
+			var input = $this.val();
+			
+			var input = input.replace(/[\D\s\._\-]+/g, "");
+					input = input ? parseInt( input, 10 ) : 0;
+
+					$this.val( function() {
+						return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
+					} );
+		} );
+		
+		
+	});
+
+</script>
 <?php } else { ?>
     <div class='notice notice-error'> key not found! </div>
 <?php } ?>
