@@ -56,6 +56,7 @@ class TagService
                 $var = "";
                 $listener = "";
                 foreach (explode('--', $replacer) as $key =>  $val) {
+                    $val = str_replace(['(',')','+','-','*','#'], '', $val);
                     $var .= " var $val=parseInt(jQuery('#{$val}').val()); ";
                     $listener .= " jQuery('#{$val}').on('input', function(){ calc{$id}()}); ";
                 }
