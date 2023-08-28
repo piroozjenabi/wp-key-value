@@ -45,7 +45,8 @@ class KeyVal extends Model
         $i = 1;
         $indexes = [];
         foreach ($list as $key => $val) {
-            if (@!$out[$val->vid])
+            if (@!$out[$val->vid]){
+
                 $indexes[] = $val->vid;
                 $out[$val->vid] = [
                     'id' => $val->key_id,
@@ -58,8 +59,9 @@ class KeyVal extends Model
                     'title' => $val->title,
                     'tag_type' => $val->tag_type,
                 ];
-            
-            @$out[$val->vid]['tags'][$val->tag_id] = [
+            }
+                
+            @$out[$val->vid]['tags'.$i][$val->tag_id]= [
                 'name' => $val->tag_name,
                 'title' => $val->tag_title,
                 'value' => $val->tag_value
@@ -67,12 +69,12 @@ class KeyVal extends Model
            
             if (@$val->tag_title)
                 $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=".renderTagShow($val->tag_value,$val->tag_type);
-            kvdd($out,0);
+            // kvdd($out,0);
             $i++;
         }
         if($witIndexes &&  $out)
             $out['indexes'] =$indexes;
-            kvdd($out);
+            // kvdd($out);
         return $out;
     }
 

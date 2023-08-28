@@ -98,8 +98,10 @@ $results = $tags->all();
                             <label class="label">Type</label>
                             <div class="control">
                                 <select name="type" class="select">
-                                    <?php foreach ($type as $key => $val) : ?>
-                                        <option value="<?= $val['key'] ?>"> <?= $val['value'] ?> </option>
+                                    <?php
+                                    $i = 0;
+                                    foreach ($type as $key => $val) : $i++;  ?>
+                                        <option value="<?= $val['key'] ?>"> <?= "{$i} - {$val['value']}" ?> </option>
                                     <?php endforeach ?>
                                 </select>
                                 <p>

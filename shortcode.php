@@ -42,7 +42,13 @@ function get_history_short_code($atts)
 function key_val_form_insert_short_code($atts){
     $name = $atts['name'] ?? null;
     $tags = $atts['tags'] ?? null;
-    view('form_insert_short_code', '', ['name' => $name, 'tags' => $tags ],true);
+    $showLookupAfterSubmit = $atts['showLookupAfterSubmit'] ?? null;
+    
+    view('form_insert_short_code', '', [
+        'name' => $name, 
+        'tags' => $tags,
+        'showLookupAfterSubmit' => $showLookupAfterSubmit
+    ],true);
 }
 
 function key_val_search($atts){

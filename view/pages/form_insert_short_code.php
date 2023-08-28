@@ -20,17 +20,21 @@ if (isset($_POST['submit'])) {
         if (isset($res)) {
             if (isset($tags) && $tags)
                 $tagValue->insertBulk($res->id, $tags);
-            echo "<div class='notice notice-success'> value submitted successfully</div>";
+            echo "<div class='notification is-primary is-light'> The data has been submitted.
+            </div>";
+            if($data['showLookupAfterSubmit']){
+                echo do_shortcode('[key_val_search search="'.$res_id.'" ]');
+            }
         } else {
 
-            echo "<div class='notice notice-error'>Error in save value</div>";
+            echo "<div class='notification is-danger is-light'>Error in save</div>";
         }
     }
 }
 
 if ($keyList) {
 ?>
-
+notification is-primary is-light
     <div class="box">
         <form action="" method="post" enctype="multipart/form-data">
 

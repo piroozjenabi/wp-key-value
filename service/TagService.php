@@ -100,6 +100,9 @@ class TagService
             case 'file':
                 $url = wp_get_attachment_url($val);
                 return "<a href='{$url}' class='button link is-small' target='__blank'>view</a>";
+            case 'link':
+               
+                return "<a href='{$val}' class='button link is-small' target='__blank'>view link</a>";
             case 'color':
                 return "<span style='background:{$val};padding:3px;text-shadow:0px 0px 2px #fff;border-radius:3px'> {$val} </span>";
             default:

@@ -23,6 +23,7 @@ class Tags extends Model
         ['key' => "formula", 'value' => "Formula Box"],
         ['key' => "api", 'value' => "api"],
         ['key' => "remote_keyval", 'value' => "remote key_val"],
+        ['key' => "group_auto_number", 'value' => "group with auto increment number"],
     ];
     function __construct()
     {
