@@ -17,6 +17,8 @@ class KeyVal extends Model
      */
     function list($limit = 400, $conditions = null, $keyIds = null, $witIndexes=true)
     {
+        $tagService = loadService('TagService');
+
         $out = [];
         $table_key = $this->db->prefix . "key_val_keys";
         $table_tags = $this->db->prefix . "key_val_tags";
@@ -74,7 +76,7 @@ class KeyVal extends Model
             ];
            
             if (@$val->tag_title)
-                $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=".renderTagShow($val->tag_value,$val->tag_type);
+                $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=". $tagService->renderShow($val->tag_value,$val->tag_type);
             // kvdd($out,0);
             $i++;
         }
