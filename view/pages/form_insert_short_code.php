@@ -91,7 +91,7 @@ if ($keyList) {
 	jQuery(function() {
 		
 		var $form = jQuery( "form" );
-		var $input = $form.find( "input[type=text]" );
+		var $input = $form.find( "input[type=number]" );
 
 		$input.on( "keyup", function( event ) {
 			

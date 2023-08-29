@@ -68,6 +68,10 @@ if ($data['search']) {
                     <?php endforeach; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
+            <tr>
+                <td><?= get_option('groupLabel') ?></td>
+                <td> <?= $val->group_id?></td>
+            </tr>
         </table>
 
     <?php else : ?>

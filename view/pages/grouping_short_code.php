@@ -81,7 +81,7 @@ $list = $groups->getListByGroup($selectedGroup);
 <?php endif; ?>
 <div>
     <?php if ($tagList && $data['isTagEditable']) : ?>
-        <div class="field <?= $data['isInline'] ? ' is-grouped is-grouped-multiline ' : '' ?>
+        <div class="field  is-grouped is-grouped-multiline' >
                     <div class=" control">
             <br />
             <button type="submit" name="edit" value="submit" class="button is-primary is-rounded "> <span class="dashicons dashicons-saved"></span> </button>
