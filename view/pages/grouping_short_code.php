@@ -76,31 +76,32 @@ $list = $groups->getListByGroup($selectedGroup);
         <?php if (isset($key->title) && $key->title) : ?>
             <h4><?= $key->title ?></h4>
         <?php endif; ?>
-<?php if ($selectedGroup) : ?>
-    <h4> <?= get_option('groupLabel') ?> : <?= $selectedGroup ?></h4>
-<?php endif; ?>
-<div>
-    <?php if ($tagList && $data['isTagEditable']) : ?>
-        <div class="field  is-grouped is-grouped-multiline' >
+        <?php if ($selectedGroup) : ?>
+            <h4> <?= get_option('groupLabel') ?> : <?= $selectedGroup ?></h4>
+        <?php endif; ?>
+        <div>
+            <?php if ($tagList && $data['isTagEditable']) : ?>
+                <div class="field <?= $data['isInline'] ? ' is-grouped is-grouped-multiline ' : '' ?>
                     <div class=" control">
-            <br />
-            <button type="submit" name="edit" value="submit" class="button is-primary is-rounded "> <span class="dashicons dashicons-saved"></span> </button>
+                    <br />
+                    <button type="submit" name="edit" value="submit" class="button is-primary is-rounded "> <span class="dashicons dashicons-saved"></span> </button>
+                    <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
+                        <?php
+                        if (!empty($data['tags']))
+                            if (!(strstr($data['tags'], $value->name)))
+                                continue;
+                        ?>
+                        <div class="control">
+                            <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>
+                                <?php if ($value->type == 'textarea') $value->type = "text"; ?>
+                                <?= $tagService->renderGet($value) ?>
+                            </label>
+                        </div>
+                    <?php endforeach ?>
+                </div>
+
         </div>
-        <?php foreach ($tagList as $key => $value) : $value->fieldName = "tags[{$value->id}]" ?>
-            <?php
-            if (!empty($data['tags']))
-                if (!(strstr($data['tags'], $value->name)))
-                    continue;
-            ?>
-            <div class="control">
-                <label for="<?= $value->name ?>"><b> <?= $value->title ?> </b>
-                    <?php if ($value->type == 'textarea') $value->type = "text"; ?>
-                    <?= $tagService->renderGet($value) ?>
-                </label>
-            </div>
-        <?php endforeach ?>
-</div>
-<?php endif; ?>
+    <?php endif; ?>
 </div>
 <table class="table is-bordered is-striped is-fullwidth is-narrow is-hoverable">
     <thead>

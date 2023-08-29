@@ -35,7 +35,7 @@ class KeyVal extends Model
             $query = "SELECT  t1.*, t2.*,
                 t3.tag_id AS tag_id,t4.name AS tag_name,t4.title AS tag_title, t4.type AS tag_type, 
                 t3.value AS tag_value ,t1.id AS vid , t1.created_at AS created_at,
-                t1.created_by AS created_by,t1.created_type AS created_type
+                t1.created_by AS created_by,t1.created_type AS created_type,
                 t5.group_id As group_id
                 FROM 
                 {$this->table} t1 
