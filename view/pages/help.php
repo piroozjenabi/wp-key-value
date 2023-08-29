@@ -88,4 +88,8 @@ $names = null;
     <code>[key_val_form_insert name="<?= $names ?>"]</code><br />
     <?php echo do_shortcode("[key_val_form_insert name='{$names}']"); ?>
 
+    <hr />
+    <h4>for Grouping</h4>
+    <code>[key_val_grouping isTagEditable="true" ]</code><br />
+    <?php echo do_shortcode('[key_val_grouping isTagEditable="true" ]'); ?>
 </div>

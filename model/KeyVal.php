@@ -22,14 +22,17 @@ class KeyVal extends Model
         $table_tags = $this->db->prefix . "key_val_tags";
         $table_tag_val = $this->db->prefix . "key_val_tag_value";
 
+        $groups = loadModel('Group');
         $con = 'WHERE 1=1 ';
         if($conditions)
             foreach ($conditions as $key => $val) {
-                $con .= " AND {$key} = '{$val}'";
+                $con .= $val === null 
+                ? " AND {$key} IS NULL"
+                : " AND {$key} = '{$val}'";
             }
-        $con .= $keyIds ? " AND t1.key_id in ({$keyIds}) " : '';
-        $list = $this->query(
-            "SELECT  t1.*, t2.*,
+        if($keyIds)
+            $con .= $keyIds ? " AND t1.key_id in ({$keyIds}) " : '';
+            $query = "SELECT  t1.*, t2.*,
                 t3.tag_id AS tag_id,t4.name AS tag_name,t4.title AS tag_title, t4.type AS tag_type, 
                 t3.value AS tag_value ,t1.id AS vid , t1.created_at AS created_at,
                 t1.created_by AS created_by,t1.created_type AS created_type
@@ -38,9 +41,11 @@ class KeyVal extends Model
                 JOIN $table_key t2 on t1.key_id=t2.id 
                 LEFT JOIN $table_tag_val t3 on t3.key_val_id=t1.id 
                 LEFT JOIN $table_tags t4 on t3.tag_id=t4.id 
+                LEFT JOIN {$groups->pivot->table} t5 on t5.key_val_id = t1.id
                 $con 
-                order by t1.created_at desc limit $limit"
-        );
+                order by t1.created_at desc limit $limit";
+                // kvdd($query);
+        $list = $this->query($query);
 
         $i = 1;
         $indexes = [];
@@ -84,10 +89,12 @@ class KeyVal extends Model
      * @param Array $list
      * @return void
      */
-    function getListByKeys($list)
+    function getListByKeys($list=null)
     {
         $keys = loadModel('Keys');
-        $keyList = $keys->whereIn('name', $list);
+        $keyList = empty($list)
+        ? $keys->all()
+        : $keys->whereIn('name', $list);
         $ids = [];
         foreach ($keyList as $key => $val) {
             $ids[] = $val->id;

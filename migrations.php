@@ -74,14 +74,16 @@ defined('ABSPATH') || exit;
   PRIMARY KEY (id)
   ) $charset_collate;";
   dbDelta($sql);
+  
   $table_name = $wpdb->prefix . "key_val_group";
   $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `name` INT NOT NULL ,
-  `params` Text NOT NULL ,
+  `name` VARCHAR(100) NULL ,
+  `params` Text NULL ,
   PRIMARY KEY (id)
   ) $charset_collate;";
   dbDelta($sql);
+
   $table_name = $wpdb->prefix . "key_val_group_val";
   $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   `id` INT NOT NULL AUTO_INCREMENT ,

@@ -71,6 +71,7 @@ function ApiKeyGen()
  */
 function view($page, $title = '', $data = [],$disableCP=false)
 {
+    $data = (array) $data;
     include 'view/layouts/header.php';
     include "view/pages/{$page}.php";
     if(!$disableCP)
@@ -158,4 +159,15 @@ function loadStyle($name, $file) {
  */
 function old($name, $default=null){
     return $_POST[$name]?? $_POST[$name]??$default??null;
+}
+/**
+ * get current url
+ */
+function getCurrentUrl($qParams=null)
+{
+    $protocol = is_ssl() ? 'https://' : 'http://';
+    $url = ($protocol) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    if($qParams)
+        $url .= strstr($url,'?') === false ?'?':'&'.$qParams ;
+    return $url;
 }

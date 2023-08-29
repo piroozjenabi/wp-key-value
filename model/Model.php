@@ -121,7 +121,10 @@ class Model
     function whereIn($field, $fields)
     {
         $fields = explode(",", $fields);
-        $fieldsQuery = "'" . implode("','", $fields) . "'";
+
+            $fieldsQuery = !$fields
+            ? ''
+            : "'" . implode("','", $fields) . "'";
         $query = "SELECT * FROM {$this->table} WHERE {$field} in ({$fieldsQuery}) ";
         return $this->query($query);
     }

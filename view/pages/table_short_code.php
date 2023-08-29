@@ -5,7 +5,7 @@ $tags = loadModel('Tags');
 $tagValue = loadModel('TagValue');
 $tagList = $tags->all();
 $tagService = loadService('TagService');
-
+$data['isTagEditable'] = $data['isTagEditable']??false;
 
 if (isset($_POST['edit']) && $_POST['edit'] && $data['isTagEditable']) {
     $tags = $_POST['tags'];
@@ -25,7 +25,7 @@ if (isset($_POST['edit']) && $_POST['edit'] && $data['isTagEditable']) {
 }
 
 
-$list = $keyVal->getListByKeys($data['name']);
+$list = $keyVal->getListByKeys($data['name']??null);
 
 
 ?>

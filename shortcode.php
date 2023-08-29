@@ -7,6 +7,8 @@ add_shortcode('key_val_history', 'get_history_short_code');
 
 add_shortcode('key_val_form_insert', 'key_val_form_insert_short_code');
 add_shortcode('key_val_search', 'key_val_search');
+
+add_shortcode('key_val_grouping', 'key_val_grouping');
 ################################# [FUNCTIONS] ################################# 
 
 function get_last_short_code($atts)
@@ -53,4 +55,8 @@ function key_val_form_insert_short_code($atts){
 
 function key_val_search($atts){
     view('search_short_code', '', $atts,true);
+}
+function key_val_grouping($atts){
+
+    view('grouping_short_code', '', $atts,true);
 }

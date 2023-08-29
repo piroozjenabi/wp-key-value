@@ -6,6 +6,11 @@ define('KEY_VAL_SETTINGS', [
         'title' => 'value label',
         'name' => 'valueLabel',
         'default' => 'value'
+    ],
+    [
+        'title' => 'group label',
+        'name' => 'groupLabel',
+        'default' => 'group'
     ]
 ]);
 
