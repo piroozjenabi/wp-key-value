@@ -92,6 +92,7 @@ $results = $tags->all();
                             <label class="label">Class</label>
                             <div class="control">
                                 <input class="input " type="text" placeholder="class" name="class" value="<?= old('class', $editData->class ?? '') ?>" />
+                                <p> <b>decimal-separator</b> : for separator Decimal in thousands </p>
                             </div>
                         </div>
                         <div class="field">

@@ -21,8 +21,8 @@ if (isset($_POST['submit'])) {
             if (isset($tags) && $tags)
                 $tagValue->insertBulk($res->id, $tags);
             echo "<div class='notification is-primary is-light'> The data has been submitted. </div>";
-            if($data['showLookupAfterSubmit']){
-                echo do_shortcode('[key_val_search search="'.$res_id.'" ]');
+            if ($data['showLookupAfterSubmit']) {
+                echo do_shortcode('[key_val_search search="' . $res_id . '" ]');
             }
         } else {
 
@@ -85,46 +85,43 @@ if ($keyList) {
     </div>
 
 
-	<script>
+    <script>
+        jQuery(function() {
+
+            var $form = jQuery("form");
+            var $input = $form.find(".decimal-separator");
+
+            $input.on("keyup", function(event) {
 
 
-	jQuery(function() {
-		
-		var $form = jQuery( "form" );
-		var $input = $form.find( "input[type=number]" );
+                // When user select text in the document, also abort.
+                var selection = window.getSelection().toString();
+                if (selection !== '') {
+                    return;
+                }
 
-		$input.on( "keyup", function( event ) {
-			
-			
-			// When user select text in the document, also abort.
-			var selection = window.getSelection().toString();
-			if ( selection !== '' ) {
-				return;
-			}
-			
-			// When the arrow keys are pressed, abort.
-			if ( jQuery.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
-				return;
-			}
-			
-			
-			var $this = jQuery( this );
-			
-			// Get the value.
-			var input = $this.val();
-			
-			var input = input.replace(/[\D\s\._\-]+/g, "");
-					input = input ? parseInt( input, 10 ) : 0;
+                // When the arrow keys are pressed, abort.
+                if (jQuery.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) {
+                    return;
+                }
 
-					$this.val( function() {
-						return ( input === 0 ) ? "" : input.toLocaleString( "en-US" );
-					} );
-		} );
-		
-		
-	});
 
-</script>
+                var $this = jQuery(this);
+
+                // Get the value.
+                var input = $this.val();
+
+                var input = input.replace(/[\D\s\._\-]+/g, "");
+                input = input ? parseInt(input, 10) : 0;
+
+                $this.val(function() {
+                    return (input === 0) ? "" : input.toLocaleString("en-US");
+                });
+            });
+
+
+        });
+    </script>
 <?php } else { ?>
     <div class='notice notice-error'> key not found! </div>
 <?php } ?>
