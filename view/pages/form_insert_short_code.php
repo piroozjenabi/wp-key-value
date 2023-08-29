@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
             if (isset($tags) && $tags)
                 $tagValue->insertBulk($res->id, $tags);
             echo "<div class='notification is-primary is-light'> The data has been submitted. </div>";
-            if ($data['showLookupAfterSubmit']) {
+            if ($data['show_lookup-after-submit']) {
                 echo do_shortcode('[key_val_search search="' . $res_id . '" ]');
             }
         } else {

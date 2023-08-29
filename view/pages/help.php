@@ -77,7 +77,7 @@ $names = null;
 
     <?php foreach ($keys as $key => $value) : $names .= $value->name . ','; ?>
         <h4>insert code for <?= $value->name ?></h4>
-        <code>[key_val_form_insert name="<?= $value->name ?>"]</code><br />
+        <code>[key_val_form_insert name="<?= $value->name ?>" show_lookup-after-submit="true|false"]</code><br />
         <?php echo do_shortcode("[key_val_form_insert name='{$value->name}']"); ?>
         <br />
     <?php endforeach;
