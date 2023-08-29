@@ -76,7 +76,6 @@ $list = $groups->getListByGroup($selectedGroup);
         <?php if (isset($key->title) && $key->title) : ?>
             <h4><?= $key->title ?></h4>
         <?php endif; ?>
-</div>
 <?php if ($selectedGroup) : ?>
     <h4> <?= get_option('groupLabel') ?> : <?= $selectedGroup ?></h4>
 <?php endif; ?>

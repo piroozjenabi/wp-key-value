@@ -14,14 +14,13 @@ if (isset($_POST['submit'])) {
     $key = $_POST['key_id'];
     $tags = $_POST['tags'];
     if (!$key) {
-        echo "<div class='notice notice-error'>key is required</div>";
+        echo "<div class='notification is-danger is-light'>key is required</div>";
     } else {
         $res = $keyVal->insert(['val' => $value, 'key_id' => $key]);
         if (isset($res)) {
             if (isset($tags) && $tags)
                 $tagValue->insertBulk($res->id, $tags);
-            echo "<div class='notification is-primary is-light'> The data has been submitted.
-            </div>";
+            echo "<div class='notification is-primary is-light'> The data has been submitted. </div>";
             if($data['showLookupAfterSubmit']){
                 echo do_shortcode('[key_val_search search="'.$res_id.'" ]');
             }
@@ -34,7 +33,6 @@ if (isset($_POST['submit'])) {
 
 if ($keyList) {
 ?>
-notification is-primary is-light
     <div class="box">
         <form action="" method="post" enctype="multipart/form-data">
 
