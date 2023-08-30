@@ -32,7 +32,7 @@ if (isset($_POST['add_group']) && $_POST['add_group']) {
         foreach ($tags as $k => $v) {
             $tag = $tagValue->find(['tag_id' => $k, 'key_val_id' => $value]);
             if (isset($tag[0]) && $tag[0]){
-                $tagValue->updateOrInsert(['id' => $tag[0]->id,'value' => $v]);
+                $tagValue->updateOrInsert(['tag_id' => $tag[0]->id,'value' => $v, 'key_val_id' => $value]);
             }
            
         }
