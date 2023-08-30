@@ -17,6 +17,7 @@ class KeyVal extends Model
      */
     function list($limit = 400, $conditions = null, $keyIds = null, $witIndexes=true)
     {
+        if($limit == 1) $limit =100;
         $tagService = loadService('TagService');
 
         $out = [];

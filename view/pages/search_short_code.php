@@ -50,7 +50,7 @@ if ($data['search']) {
     <?php if ($list) : ?>
         <table class="table is-bordered is-striped is-fullwidth is-narrow is-hoverable">
 
-            <?php foreach ($list[$list['indexes'][0]] as $key => $val) :
+            <?php foreach ($list[$list['indexes'][0]] as $key => $val)  : ;
                 if ($key == 'id') continue;
                 if ($key == 'created_by') continue;
                 if ($key == 'name') continue;
