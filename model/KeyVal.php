@@ -66,13 +66,15 @@ class KeyVal extends Model
                     'name' => $val->name,
                     'title' => $val->title,
                     'tag_type' => $val->tag_type,
+                    'group_id' => $val->group_id,
                 ];
             }
                 
-            @$out[$val->vid]['tags'.$i][$val->tag_id]= [
+            @$out[$val->vid]['tags'][$val->tag_id]= [
                 'name' => $val->tag_name,
                 'title' => $val->tag_title,
-                'value' => $val->tag_value
+                'value' => $val->tag_value,
+                'type' => $val->tag_type
             ];
            
             if (@$val->tag_title)

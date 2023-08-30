@@ -49,29 +49,45 @@ if ($data['search']) {
 <?php if ((isset($_POST['search']) && $_POST['search']) || $data['search']) :  ?>
     <?php if ($list) : ?>
         <table class="table is-bordered is-striped is-fullwidth is-narrow is-hoverable">
+
             <?php foreach ($list[$list['indexes'][0]] as $key => $val) :
                 if ($key == 'id') continue;
-                // if ($key == 'tags') continue;
+                if ($key == 'created_by') continue;
+                if ($key == 'name') continue;
+                if ($key == 'vid') continue;
                 if ($key == 'tags_print') continue;
 
             ?>
+
+                <?php if ($key == 'tags') : ?>
+                    <?php foreach ($val as $k => $v) : ?>
+                        <tr>
+                            <td> <?= $v['title'] ?></td>
+                            <td> <?= $tagService->renderShow($v['value'], $v['type']) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php continue;
+                endif; ?>
+                <?php if ($key == 'val') : ?>
+                    <tr>
+                        <td><?= get_option('valueLabel') ?></td>
+                        <td> <?= $val ?></td>
+                    </tr>
+                <?php continue;
+                endif; ?>
+                <?php if ($key == 'group_id') : ?>
+                    <tr>
+                        <td><?= get_option('groupLabel') ?></td>
+                        <td> <?= $val ?></td>
+                    </tr>
+                <?php continue;
+                endif; ?>
                 <tr>
                     <td><?= $key ?></td>
                     <td><?= $val ?></td>
                 </tr>
-                <?php if ($key == 'tags') : ?>
-                    <?php foreach ($val as $k => $v) : ?>
-                        <tr>
-                            <td><?= $k ?></td>
-                            <td> <?= $tagService->renderShow($v) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
             <?php endforeach; ?>
-            <tr>
-                <td><?= get_option('groupLabel') ?></td>
-                <td> <?= $val->group_id?></td>
-            </tr>
+
         </table>
 
     <?php else : ?>
