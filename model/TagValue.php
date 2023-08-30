@@ -31,7 +31,7 @@ class TagValue extends Model {
     
     
     function updateOrInsert($data){
-        $find = parent::find([$data]);
+        $find = parent::find($data);
         return $find 
         ? parent::update($data['id'],$data)
         : parent::insert($data);

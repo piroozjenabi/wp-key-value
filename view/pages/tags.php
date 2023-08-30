@@ -115,7 +115,7 @@ $results = $tags->all();
 
                         <div class="field">
                             <label for="isActive">
-                                <input type="checkbox" name="is_active" value="1" value="<?= old('readonly', $editData->is_active ?? '') ?>" />
+                                <input type="checkbox" name="is_active" value="1" value="<?= old('readonly', $editData->is_active ?? '') ?>" checked />
                                 show in submit form (active)</label>
 
                         </div>
