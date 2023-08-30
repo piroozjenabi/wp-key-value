@@ -118,7 +118,7 @@ $list = $groups->getListByGroup($selectedGroup);
         <tr>
             <?php if ($data['isTagEditable']) : ?>
                 <td>
-                    <input type="checkbox" id="select_all" name="value[]" value="<?= $value['vid'] ?>" />
+                    <input type="checkbox" <?= $selectedGroup? 'checked':'' ?>  name="value[]" value="<?= $value['vid'] ?>" />
                 </td>
             <?php endif; ?>
             <td><?= $value['title'] ?></td>

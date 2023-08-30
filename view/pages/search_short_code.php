@@ -12,8 +12,7 @@ $data['search'] = $data['search'] ?? '';
 
 if ($data['search']) {
     $list = $keyVal->list(1, [
-        't4.name' => $data['search'],
-        't3.value' => $value
+        't1.val' => $data['search'],
     ]);
 } else if (isset($_POST['search']) && $_POST['search']) {
     $value = $_POST['keyword'];
