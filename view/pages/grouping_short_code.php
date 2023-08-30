@@ -33,6 +33,8 @@ if (isset($_POST['add_group']) && $_POST['add_group']) {
             $tag = $tagValue->find(['tag_id' => $k, 'key_val_id' => $value]);
             if (isset($tag[0]) && $tag[0])
                 $tagValue->update($tag[0]->id, ['value' => $v]);
+            else
+                $tagValue->insert(['key_val_id' => $value,'value' => $v]);
         }
     }
     echo "<div class='notice'>Tags is updated</div>";
@@ -80,7 +82,7 @@ $list = $groups->getListByGroup($selectedGroup);
             <h4> <?= get_option('groupLabel') ?> : <?= $selectedGroup ?></h4>
         <?php endif; ?>
         <div>
-            <?php if ($tagList && $data['isTagEditable']) : ?>
+            <?php if ($tagList && $data['isTagEditable'] && $selectedGroup) : ?>
                 <div class="field <?= $data['isInline'] ? ' is-grouped is-grouped-multiline ' : '' ?>
                     <div class=" control">
                     <br />
