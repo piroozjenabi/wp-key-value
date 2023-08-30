@@ -72,6 +72,7 @@ class Model
     function update($id, $data)
     {
         $set = '';
+        unset($data['id']);
         foreach ($data as $key => $val)
             $set .= " `{$key}` = '{$val}' ,";
         $set = substr($set, 0, -1);

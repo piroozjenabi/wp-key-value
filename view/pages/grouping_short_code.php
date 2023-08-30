@@ -31,10 +31,10 @@ if (isset($_POST['add_group']) && $_POST['add_group']) {
     foreach ($values as $key => $value) {
         foreach ($tags as $k => $v) {
             $tag = $tagValue->find(['tag_id' => $k, 'key_val_id' => $value]);
-            if (isset($tag[0]) && $tag[0])
-                $tagValue->update($tag[0]->id, ['value' => $v]);
-            else
-                $tagValue->insert(['key_val_id' => $value,'value' => $v]);
+            if (isset($tag[0]) && $tag[0]){
+                $tagValue->updateOrInsert(['id' => $tag[0]->id,'value' => $v]);
+            }
+           
         }
     }
     echo "<div class='notice'>Tags is updated</div>";
