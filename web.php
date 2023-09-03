@@ -49,6 +49,16 @@ function init_menu()
   );
   add_submenu_page(
     "manage_key_val",
+    "Manage ".get_option('groupLabel'),
+    "Manage ".get_option('groupLabel'),
+    "manage_options",
+    "manage_key_val_groups",
+    function () {
+      view('groups');
+    }
+  );
+  add_submenu_page(
+    "manage_key_val",
     "Settings",
     "Settings",
     "manage_options",

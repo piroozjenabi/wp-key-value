@@ -6,9 +6,7 @@ $tags = loadModel('Tags');
 $tagValue = loadModel('TagValue');
 $tagList = $tags->all();
 $tagListFile = $tags->find(['type' => 'file']);
-
 $tagService = loadService('TagService');
-
 ?>
 
 <?php
@@ -128,7 +126,7 @@ if (isset($_POST['submit'])) {
                                     No Key Val Entered until now, please <b>Add new Value</b> to show here
                                 </p>
                                 ';
-                            } else {
+                            } else { 
                                 $flg = true;
 
                                 echo '<table class="table is-bordered is-striped is-fullwidth is-narrow is-hoverable">
@@ -137,7 +135,9 @@ if (isset($_POST['submit'])) {
                                     <th >' . get_option('valueLabel') . '</th>
                                     <th >key</th>
                                     <th >tags</th>
+                                    <th >' . get_option('groupLabel') . '</th>
                                     <th >creator</th>
+
                                     <th >date</th>
                                     <th >actions</th>
                                 </tr>';
@@ -159,6 +159,7 @@ if (isset($_POST['submit'])) {
                                             : ''
                                         )
                                         . '</td>
+                                        <td >' . $result['group_id'] . '</td>
                                         <td >' . ($creator->user_nicename ?? $result['created_type'] ?? '') . '</td>
                                         <td >' . $result['created_at'] . '</td>
 
