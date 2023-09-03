@@ -30,14 +30,10 @@ if (isset($_POST['add_group']) && $_POST['add_group']) {
     $values = $_POST['value'];
     foreach ($values as $key => $value) {
         foreach ($tags as $k => $v) {
-            $tag = $tagValue->find(['tag_id' => $k, 'key_val_id' => $value]);
-            if (isset($tag[0]) && $tag[0])
-                $tagValue->update($tag[0]->id, ['value' => $v]);
-            else
-                $tagValue->insert(['key_val_id' => $value,'value' => $v]);
+            $tagValue->updateOrInsert(['tag_id' => $k, 'value' => $v, 'key_val_id' => $value]);
         }
     }
-    echo "<div class='notice'>Tags is updated</div>";
+    echo "<div class='notification is-primary is-light'>Tags is updated</div>";
 }
 //  elseif (isset($_POST['deleteSubmit']) && $_POST['delete'] > 0 ) {
 
