@@ -10,6 +10,7 @@ if (isset($_POST['delete']) && $_POST['delete']) {
 }
 
 $editData = [];
+
 if (isset($_POST['edit']) && $_POST['edit']) {
     $editData = $tags->findById($_POST['edit'])[0] ?? [];
     echo "<div class='notification is-primary is-light'>{$editData->title} is editing</div>";
@@ -25,16 +26,18 @@ if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
         'type' => $_POST['type'],
         'params' => $_POST['params'],
         'class' => $_POST['class'],
+        'is_active' => $_POST['is_active'],
+        'readonly' => $_POST['readonly'],
     ]);
     echo "<div class='notification is-primary is-light'>{$editData->title} is updated</div>";
 } else if (isset($_POST['submit'])) {
     //add price
     $name = $_POST['name'];
     $title = $_POST['title'];
-    $type = $_POST['type'];
+    $typep = $_POST['type'];
     $params = $_POST['params'];
-    $readonly = $_POST['readonly'];
-    $is_active = $_POST['is_active'];
+    $readonly = $_POST['readonly'] ?? 0;
+    $is_active = $_POST['is_active'] ?? 1;
     $default = $_POST['default'];
     $class = $_POST['class'];
     if (!$name) {
@@ -43,9 +46,10 @@ if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
         $res = $tags->insert([
             'name' => $name,
             'title' => $title,
-            'type' => $type,
+            'type' => $typep,
             'params' => $params,
             'is_active' => $is_active,
+            'readonly' => $readonly,
             'class' => $class,
             'style' => $style,
             'default_value' => $default
@@ -102,7 +106,7 @@ $results = $tags->all();
                                     <?php
                                     $i = 0;
                                     foreach ($type as $key => $val) : $i++;  ?>
-                                        <option <?= $editData->type == $val['key'] ? 'selected': '' ?> value="<?= $val['key'] ?>"> <?= "{$i} - {$val['value']}" ?> </option>
+                                        <option <?= isset($editData->type) && $editData->type == $val['key'] ? 'selected' : '' ?> value="<?= $val['key'] ?>"> <?= "{$i} - {$val['value']}" ?> </option>
                                     <?php endforeach ?>
                                 </select>
                                 <p>
@@ -115,13 +119,13 @@ $results = $tags->all();
 
                         <div class="field">
                             <label for="isActive">
-                                <input type="checkbox" name="is_active" value="1" value="<?= old('readonly', $editData->is_active ?? '') ?>" checked />
+                                <input type="checkbox" name="is_active" value="1" <?= isset($editData->is_active) && $editData->is_active == 0 ? '' : 'checked'  ?> />
                                 show in submit form (active)</label>
 
                         </div>
                         <div class="field">
                             <label for="readonly">
-                                <input type="checkbox" name="readonly" value="1" value="<?= old('readonly', $editData->readonly ?? '') ?>" />
+                                <input type="checkbox" name="readonly" value="1" <?= isset($editData->readonly) && $editData->readonly == 0 ? '' : 'checked'  ?> />
                                 Read only</label>
 
                         </div>
@@ -168,7 +172,7 @@ $results = $tags->all();
                             </div>
                         </div>
 
-                        <input type="hidden" name="edit_confirm" value="<?= $editData->id ?>" />
+                        <input type="hidden" name="edit_confirm" value="<?= $editData->id ?? '' ?>" />
                 </form>
             </div>
 
