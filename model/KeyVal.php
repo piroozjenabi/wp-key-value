@@ -80,7 +80,7 @@ class KeyVal extends Model
             ];
            
             if (@$val->tag_title)
-                $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=". $tagService->renderShow($val->tag_value,$val->tag_type);
+                $out[$val->vid]['tags_print'][$val->tag_id] = "{$val->tag_title}=". $tagService->renderShow($val->tag_value,$val->tag_type,$val);
             // kvdd($out,0);
             $i++;
         }

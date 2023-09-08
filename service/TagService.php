@@ -94,8 +94,9 @@ class TagService
      * @param string $type
      * @return string
      */
-    function renderShow(String $val, String $type = 'text',Array $tag = []): string
+    function renderShow(String $val, String $type = 'text', $tag = []): string
     {
+        $tag = (array) $tag;
         switch ($type) {
             case 'file':
                 $url = wp_get_attachment_url($val);
@@ -106,6 +107,8 @@ class TagService
                 return "<span style='background:{$val};padding:3px;text-shadow:0px 0px 2px #fff;border-radius:3px'> {$val} </span>";
             case 'text':
                 if(isset($tag['class']) && strstr($tag['class'], 'decimal-separator'))
+                    $val = number_format($val);
+                if(isset($tag['tag_class']) && strstr($tag['tag_class'], 'decimal-separator'))
                     $val = number_format($val);
                 return $val;
             default:
