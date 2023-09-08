@@ -36,15 +36,15 @@ function get_history_short_code($atts)
     view('table_short_code','',[
         'name' => $name ,
         'tags' => $tags ,
-        'isTagEditable' => !($atts['isTagEditable'] ? true : false),
-        'isInline' => !($atts['isInline'] ? true : false),
+        'is-tag-editable' => !($atts['is-tag-editable'] ? true : false),
+        'is-inline' => !($atts['is-inline'] ? true : false),
     ], true);
 }
 
 function key_val_form_insert_short_code($atts){
     $name = $atts['name'] ?? null;
     $tags = $atts['tags'] ?? null;
-    $showLookupAfterSubmit = $atts['show_lookup-after-submit'] ?? null;
+    $showLookupAfterSubmit = $atts['show-lookup-after-submit'] ?? null;
     
     view('form_insert_short_code', '', [
         'name' => $name, 

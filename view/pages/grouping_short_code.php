@@ -7,8 +7,8 @@ $tagList = $tags->all();
 $tagService = loadService('TagService');
 $groups = loadModel('Group');
 
-$data['isTagEditable'] = $data['isTagEditable'] ?? true;
-$data['isInline'] = $data['isInline'] ?? true;
+$data['is-tag-editable'] = $data['is-tag-editable'] ?? true;
+$data['is-inline'] = $data['is-inline'] ?? true;
 
 $selectedGroup = $_GET['group'] ?? $_POST['group'] ?? 0;
 // kvdd($data);
@@ -25,7 +25,7 @@ if (isset($_POST['add_group']) && $_POST['add_group']) {
 
     $selectedGroup = $group->id;
     echo "<div class='notification is-primary is-light'>" . get_option('groupLabel') . " {$group->id} created successful</div>";
-} elseif (isset($_POST['edit']) && $_POST['edit'] && $data['isTagEditable']) {
+} elseif (isset($_POST['edit']) && $_POST['edit'] && $data['is-tag-editable']) {
     $tags = $_POST['tags'];
     $values = $_POST['value'];
     foreach ($values as $key => $value) {
@@ -78,8 +78,8 @@ $list = $groups->getListByGroup($selectedGroup);
             <h4> <?= get_option('groupLabel') ?> : <?= $selectedGroup ?></h4>
         <?php endif; ?>
         <div>
-            <?php if ($tagList && $data['isTagEditable'] && $selectedGroup) : ?>
-                <div class="field <?= $data['isInline'] ? ' is-grouped is-grouped-multiline ' : '' ?>
+            <?php if ($tagList && $data['is-tag-editable'] && $selectedGroup) : ?>
+                <div class="field <?= $data['is-inline'] ? ' is-grouped is-grouped-multiline ' : '' ?>
                     <div class=" control">
                     <br />
                     <button type="submit" name="edit" value="submit" class="button is-primary is-rounded "> <span class="dashicons dashicons-saved"></span> </button>
@@ -114,7 +114,7 @@ $list = $groups->getListByGroup($selectedGroup);
     <?php foreach ($list as $key => $value) : ?>
 
         <tr>
-            <?php if ($data['isTagEditable']) : ?>
+            <?php if ($data['is-tag-editable']) : ?>
                 <td>
                     <input type="checkbox" <?= $selectedGroup? 'checked':'' ?>  name="value[]" value="<?= $value['vid'] ?>" />
                 </td>

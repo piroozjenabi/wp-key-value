@@ -12,7 +12,6 @@ if (isset($_POST['delete']) && $_POST['delete']) {
 $editData = [];
 if (isset($_POST['edit']) && $_POST['edit']) {
     $editData = $tags->findById($_POST['edit'])[0] ?? [];
-    // kvdd($editData);
     echo "<div class='notification is-primary is-light'>{$editData->title} is editing</div>";
 }
 if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
@@ -25,6 +24,7 @@ if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
         'default_value' => $_POST['default'],
         'type' => $_POST['type'],
         'params' => $_POST['params'],
+        'class' => $_POST['class'],
     ]);
     echo "<div class='notification is-primary is-light'>{$editData->title} is updated</div>";
 } else if (isset($_POST['submit'])) {
@@ -36,10 +36,10 @@ if (isset($_POST['edit_confirm']) && $_POST['edit_confirm']) {
     $readonly = $_POST['readonly'];
     $is_active = $_POST['is_active'];
     $default = $_POST['default'];
+    $class = $_POST['class'];
     if (!$name) {
         echo "<div class='notice notice-error'>name is required</div>";
     } else {
-
         $res = $tags->insert([
             'name' => $name,
             'title' => $title,
@@ -102,7 +102,7 @@ $results = $tags->all();
                                     <?php
                                     $i = 0;
                                     foreach ($type as $key => $val) : $i++;  ?>
-                                        <option value="<?= $val['key'] ?>"> <?= "{$i} - {$val['value']}" ?> </option>
+                                        <option <?= $editData->type == $val['key'] ? 'selected': '' ?> value="<?= $val['key'] ?>"> <?= "{$i} - {$val['value']}" ?> </option>
                                     <?php endforeach ?>
                                 </select>
                                 <p>

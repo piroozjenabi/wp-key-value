@@ -10,6 +10,7 @@ $keys = $key->all();
 $names = null;
 ?>
 
+
 <div class="wrap box">
 
 
@@ -58,11 +59,11 @@ $names = null;
     <?php endforeach; ?>
     <hr />
     <h3>For short codes HISTORY VAL</h3>
-    <code>[key_val_history name="{name}" isTagEditable="true|false" isInline="true|false"]</code><br />
+    <code>[key_val_history name="{name}" is-tag-editable="true|false" is-inline="true|false"]</code><br />
     <?php foreach ($keys as $key => $value) : ?>
         <p>for show history VAL of <?= $value->name ?></p>
         <code>[key_val_history name="<?= $value->name ?>"]</code><br />
-        <?php echo do_shortcode("[key_val_history name='{$value->name}']"); ?>
+        <?php echo do_shortcode("[key_val_history  name='{$value->name}']"); ?>
     <?php endforeach; ?>
     </p>
 
@@ -90,6 +91,6 @@ $names = null;
 
     <hr />
     <h4>for Grouping</h4>
-    <code>[key_val_grouping isTagEditable="true" ]</code><br />
-    <?php echo do_shortcode('[key_val_grouping isTagEditable="true" ]'); ?>
+    <code>[key_val_grouping is-tag-editable="true" ]</code><br />
+    <?php echo do_shortcode('[key_val_grouping is-tag-editable="true" ]'); ?>
 </div>

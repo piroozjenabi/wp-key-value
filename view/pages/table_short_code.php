@@ -5,9 +5,9 @@ $tags = loadModel('Tags');
 $tagValue = loadModel('TagValue');
 $tagList = $tags->all();
 $tagService = loadService('TagService');
-$data['isTagEditable'] = $data['isTagEditable']??false;
+$data['is-tag-editable'] = $data['is-tag-editable']??false;
 
-if (isset($_POST['edit']) && $_POST['edit'] && $data['isTagEditable']) {
+if (isset($_POST['edit']) && $_POST['edit'] && $data['is-tag-editable']) {
     $tags = $_POST['tags'];
     $values = $_POST['value'];
     foreach ($values as $key => $value) {
@@ -35,8 +35,8 @@ $list = $keyVal->getListByKeys($data['name']??null);
 
         <h4><?= $key->title ?></h4>
         <div>
-            <?php if ($tagList && $data['isTagEditable']) : ?>
-                <div class="field <?= $data['isInline'] ? ' is-grouped is-grouped-multiline ' : '' ?>">
+            <?php if ($tagList && $data['is-tag-editable']) : ?>
+                <div class="field <?= $data['is-inline'] ? ' is-grouped is-grouped-multiline ' : '' ?>">
                     <div class="control">
                         <br />
                         <button type="submit" name="edit" value="submit" class="button is-primary is-rounded "> <span class="dashicons dashicons-saved"></span> </button>
@@ -61,7 +61,7 @@ $list = $keyVal->getListByKeys($data['name']??null);
             <?php foreach ($list as $key => $value) : ?>
 
                 <tr>
-                    <?php if ($data['isTagEditable']) : ?>
+                    <?php if ($data['is-tag-editable']) : ?>
                         <td>
                             <input type="checkbox" name="value[]" value="<?= $value['vid'] ?>" />
                         </td>

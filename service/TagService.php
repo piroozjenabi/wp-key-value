@@ -94,17 +94,20 @@ class TagService
      * @param string $type
      * @return string
      */
-    function renderShow(String $val, String $type = 'text'): string
+    function renderShow(String $val, String $type = 'text',Array $tag = []): string
     {
         switch ($type) {
             case 'file':
                 $url = wp_get_attachment_url($val);
                 return "<a href='{$url}' class='button link is-small' target='__blank'>view</a>";
             case 'link':
-               
                 return "<a href='{$val}' class='button link is-small' target='__blank'>view link</a>";
             case 'color':
                 return "<span style='background:{$val};padding:3px;text-shadow:0px 0px 2px #fff;border-radius:3px'> {$val} </span>";
+            case 'text':
+                if(isset($tag['class']) && strstr($tag['class'], 'decimal-separator'))
+                    $val = number_format($val);
+                return $val;
             default:
                 return $val;
         }

@@ -36,7 +36,7 @@ class KeyVal extends Model
         if($keyIds)
             $con .= $keyIds ? " AND t1.key_id in ({$keyIds}) " : '';
             $query = "SELECT  t1.*, t2.*,
-                t3.tag_id AS tag_id,t4.name AS tag_name,t4.title AS tag_title, t4.type AS tag_type, 
+                t3.tag_id AS tag_id,t4.name AS tag_name,t4.title AS tag_title, t4.type AS tag_type, t4.class AS tag_class, 
                 t3.value AS tag_value ,t1.id AS vid , t1.created_at AS created_at,
                 t1.created_by AS created_by,t1.created_type AS created_type,
                 t5.group_id As group_id
@@ -75,7 +75,8 @@ class KeyVal extends Model
                 'name' => $val->tag_name,
                 'title' => $val->tag_title,
                 'value' => $val->tag_value,
-                'type' => $val->tag_type
+                'type' => $val->tag_type,
+                'class' => $val->tag_class
             ];
            
             if (@$val->tag_title)

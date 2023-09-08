@@ -50,19 +50,20 @@ if ($data['search']) {
         <table class="table is-bordered is-striped is-fullwidth is-narrow is-hoverable">
 
             <?php foreach ($list[$list['indexes'][0]] as $key => $val)  : ;
-                if ($key == 'id') continue;
-                if ($key == 'created_by') continue;
-                if ($key == 'name') continue;
-                if ($key == 'vid') continue;
-                if ($key == 'tags_print') continue;
-
+                if (in_array($key,[ 
+                    'id' , 'created_by' , 'created_by' , 'name' ,
+                    'vid' , 'tags_print' , 'title', 'created_type',
+                    'tag_type',
+                    ]))
+                    continue;
             ?>
 
                 <?php if ($key == 'tags') : ?>
-                    <?php foreach ($val as $k => $v) : ?>
+                    <?php foreach ($val as $k => $v) :  ?>
                         <tr>
                             <td> <?= $v['title'] ?></td>
-                            <td> <?= $tagService->renderShow($v['value'], $v['type']) ?></td>
+
+                            <td> <?= $tagService->renderShow($v['value'], $v['type'], $v) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 <?php continue;
