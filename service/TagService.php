@@ -98,9 +98,10 @@ class TagService
     {
         $tag = (array) $tag;
         if (isset($tag['class']) && strstr($tag['class'], 'decimal-separator'))
-        $val = number_format($val);
+            $val = number_format($val);
+            
         if (isset($tag['tag_class']) && strstr($tag['tag_class'], 'decimal-separator'))
-        $val = number_format($val);
+            $val = number_format($val);
 
         switch ($type) {
             case 'file':
